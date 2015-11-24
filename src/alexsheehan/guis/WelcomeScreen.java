@@ -1,14 +1,16 @@
 package alexsheehan.guis;
 
+import alexsheehan.kel.AlexKEL;
+
 
 public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Programmes
 
    //Konstruktor
     public WelcomeScreen() {
         initComponents(); 
-        setVisible(true);
         
-        PrgFunktionen x = new PrgFunktionen();
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -19,9 +21,10 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         prjnamelabel = new javax.swing.JLabel();
         bottomseperator = new javax.swing.JSeparator();
         lbalexsheehan = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnFunktions = new javax.swing.JButton();
+        btnUsage = new javax.swing.JButton();
+        btnEnglish = new javax.swing.JButton();
+        btnFrz = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -30,21 +33,30 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         prjnamelabel.setFont(new java.awt.Font("Calibri", 1, 48)); // NOI18N
         prjnamelabel.setForeground(new java.awt.Color(0, 102, 0));
         prjnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        prjnamelabel.setText("Projektname");
+        prjnamelabel.setText("Vokabeltrainer");
 
         lbalexsheehan.setText("Alex Sheehan");
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 102));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Welche Funktionen hat das Programm?");
+        btnFunktions.setBackground(new java.awt.Color(0, 0, 102));
+        btnFunktions.setForeground(new java.awt.Color(255, 255, 255));
+        btnFunktions.setText("Welche Funktionen hat das Programm?");
 
-        jButton2.setBackground(new java.awt.Color(102, 0, 0));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Wie bediene ich das Programm?");
+        btnUsage.setBackground(new java.awt.Color(0, 102, 0));
+        btnUsage.setForeground(new java.awt.Color(255, 255, 255));
+        btnUsage.setText("Wie bediene ich das Programm?");
 
-        jButton3.setBackground(new java.awt.Color(0, 102, 0));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Zum Programm!");
+        btnEnglish.setBackground(new java.awt.Color(102, 0, 0));
+        btnEnglish.setForeground(new java.awt.Color(255, 255, 255));
+        btnEnglish.setText("Englische Vokabeln");
+        btnEnglish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnglishActionPerformed(evt);
+            }
+        });
+
+        btnFrz.setBackground(new java.awt.Color(204, 102, 0));
+        btnFrz.setForeground(new java.awt.Color(255, 255, 255));
+        btnFrz.setText("Französische Vokabeln");
 
         javax.swing.GroupLayout bgpanelLayout = new javax.swing.GroupLayout(bgpanel);
         bgpanel.setLayout(bgpanelLayout);
@@ -53,14 +65,18 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
             .addGroup(bgpanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(bgpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(prjnamelabel, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
+                    .addComponent(btnUsage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFunktions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(prjnamelabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bottomseperator)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgpanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lbalexsheehan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(bgpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbalexsheehan, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(bgpanelLayout.createSequentialGroup()
+                                .addComponent(btnEnglish, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnFrz, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         bgpanelLayout.setVerticalGroup(
@@ -69,11 +85,13 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
                 .addContainerGap()
                 .addComponent(prjnamelabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnFunktions, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(bgpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnEnglish, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(btnFrz, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addComponent(bottomseperator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -99,15 +117,20 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnEnglishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnglishActionPerformed
+        new VocabTrainer(AlexKEL.getEnglish()).setVisible(true);
+    }//GEN-LAST:event_btnEnglishActionPerformed
+
     
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bgpanel;
     private javax.swing.JSeparator bottomseperator;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnEnglish;
+    private javax.swing.JButton btnFrz;
+    private javax.swing.JButton btnFunktions;
+    private javax.swing.JButton btnUsage;
     private javax.swing.JLabel lbalexsheehan;
     private javax.swing.JLabel prjnamelabel;
     // End of variables declaration//GEN-END:variables
