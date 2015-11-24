@@ -9,7 +9,7 @@ import alexsheehan.guis.WelcomeScreen;
  * Klausurersatzleistung Info LK
  */
 
-public class AlexKEL { //TODO: Change Name
+public class AlexKEL { //TODO: Change Name to Vokabeltrainer
 
    
     private static Manager eng;
@@ -19,7 +19,7 @@ public class AlexKEL { //TODO: Change Name
     public static void main(String[] args) {
         new WelcomeScreen().setVisible(true); //Start-GUI erstellen
         eng = new EnglishManager();
-        
+       
         
     }
     
