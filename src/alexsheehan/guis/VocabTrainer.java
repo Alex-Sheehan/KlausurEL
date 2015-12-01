@@ -235,6 +235,7 @@ public class VocabTrainer extends javax.swing.JFrame {
             btnNewTraining.setText(manager.getNewTrainingText());  
             btnNext.setText(manager.getNextWordText());
             btnHint.setText(manager.getbtnHintText());
+            lbAmountText.setText(manager.getAmountWordsCaption());
         } else {
             lbHeader.setText("Vokabeltrainer: " + manager.getGermanLanguageName());
             btnAddvoc.setText("Wort hinzufügen");
@@ -248,6 +249,7 @@ public class VocabTrainer extends javax.swing.JFrame {
             btnNewTraining.setText("Neues Training");
             btnNext.setText("Nächste Vokabel");  
             btnHint.setText("Hinweis");
+            lbAmountText.setText("Größe der Liste");
         }
     }
 
