@@ -1,5 +1,7 @@
 package alexsheehan.kel;
 
+import alexsheehan.kel.*;
+
 public class Vokabel {
 
     private String ger;
