@@ -85,10 +85,12 @@ public class Liste {
     }
 
     public void next() {
-        current = current.getNext();
+        
         
         if(current == last){
             current = first;
+        }else{
+            current = current.getNext();
         }
     }
 

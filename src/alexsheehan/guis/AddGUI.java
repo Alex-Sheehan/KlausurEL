@@ -1,5 +1,6 @@
 package alexsheehan.guis;
 
+import alexsheehan.kel.Miscellaneous;
 import alexsheehan.kel.Vokabel;
 
 /**
@@ -15,20 +16,8 @@ public class AddGUI extends javax.swing.JFrame {
         trainer = t;
         lbForeign.setText(trainer.getManager().getTfLabelInGerman() + " Wort:");
         lbVal.setText("" + jSlider1.getValue());
-        writeStars(jSlider1.getValue());
+        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue()));
 
-    }
-
-    private void writeStars(int x) {
-        switch (x) {
-            case 1:lbStars.setText("★");break;
-            case 2:lbStars.setText("★★");break;
-            case 3:lbStars.setText("★★★");break;
-            case 4:lbStars.setText("★★★★");break;
-            case 5:lbStars.setText("★★★★★");break;
-            default:break;
-
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -155,23 +144,23 @@ public class AddGUI extends javax.swing.JFrame {
 
     private void jSlider1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jSlider1PropertyChange
         lbVal.setText("" + jSlider1.getValue());
-        writeStars(jSlider1.getValue());
+        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue()));
     }//GEN-LAST:event_jSlider1PropertyChange
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
         lbVal.setText("" + jSlider1.getValue());
-        writeStars(jSlider1.getValue());
+        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue()));
     }//GEN-LAST:event_jSlider1StateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String x = tfGerman.getText();
         String y = tfForeign.getText();
         int z = jSlider1.getValue();
-                
-        if(!(x.isEmpty()) && !(y.isEmpty())){
+
+        if (!(x.isEmpty()) && !(y.isEmpty())) {
             trainer.addVokabel(new Vokabel(x, y, z));
             this.dispose();
-        }else{
+        } else {
             lbError.setText("Kein Textfeld darf leer sein!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed

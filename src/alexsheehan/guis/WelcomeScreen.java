@@ -1,6 +1,9 @@
 package alexsheehan.guis;
 
 import alexsheehan.kel.AlexKEL;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Programmes
@@ -47,6 +50,11 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         btnUsage.setBackground(new java.awt.Color(0, 153, 153));
         btnUsage.setForeground(new java.awt.Color(255, 255, 255));
         btnUsage.setText("Wie bediene ich das Programm?");
+        btnUsage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsageActionPerformed(evt);
+            }
+        });
 
         btnEnglish.setBackground(new java.awt.Color(102, 0, 0));
         btnEnglish.setForeground(new java.awt.Color(255, 255, 255));
@@ -140,6 +148,14 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         new VocabTrainer(AlexKEL.getFrench()).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnFrzActionPerformed
+
+    private void btnUsageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsageActionPerformed
+        try {
+            new Bedienung().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(WelcomeScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUsageActionPerformed
 
     
 

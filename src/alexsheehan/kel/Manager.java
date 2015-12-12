@@ -1,5 +1,6 @@
 package alexsheehan.kel;
 
+import alexsheehan.datenstrk.Knoten;
 import alexsheehan.kel.*;
 import alexsheehan.datenstrk.Liste;
 
@@ -29,24 +30,34 @@ public abstract class Manager {
     protected String checkButton; //Überprüfen
     protected String newTraining; //Neues Training
     protected String nextWord; //Nächstes Wort
-    protected String hintText; //Hinweis Button
+
+    //Sort GUI
+    protected String sortGUICaption;
+    protected String tableGermanRow;
+    protected String difficulty;
+    protected String swapPos;
+
+    //Training info
+    protected String words;
+    protected String correct;
+    protected String shown;
+    protected String gershown;
 
     /* 
-    => Constructor
-    */
+     => Constructor
+     */
     public Manager() {
         vkList = new Liste();
     }
-    
-    /*
-    => Getter Methoden, sehr viele Getter Methoden
-    */
 
+    /*
+     => Getter Methoden, sehr viele Getter Methoden
+     */
     public Liste getList() { //Die Liste
         return vkList;
     }
-    
-     public Language getLanguage() {
+
+    public Language getLanguage() {
         return lang;
     }
 
@@ -94,15 +105,48 @@ public abstract class Manager {
         return sortButtonText;
     }
 
-    public String getbtnHintText() {
-        return hintText;
-    }
-
     public String getTfLabel() {
         return tfLabel;
     }
 
     public String getTfLabelGerman() {
         return tfLabelGer;
+    }
+
+    public String getSortGUICaption() {
+        return sortGUICaption;
+    }
+
+    public String getTableGermanRow() {
+        return tableGermanRow;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public String getSwapText() {
+        return swapPos;
+    }
+
+    public void addVokabel(Vokabel q) {
+        getList().append(new Knoten(q));
+
+    }
+
+    public String getWords() {
+        return words;
+    }
+
+    public String getCorrect() {
+        return correct;
+    }
+
+    public String getShown() {
+        return shown;
+    }
+    
+    public String getGerShown(){
+        return gershown;
     }
 }

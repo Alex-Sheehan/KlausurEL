@@ -26,8 +26,21 @@ public class EnglishManager extends Manager{
         this.checkButton = "Check";
         this.newTraining = "New Training";
         this.nextWord = "Next Word";
-        this.hintText = "Hint";
+        
         this.addButtonText = "Add";
+        
+        //Sort GUI
+        this.sortGUICaption = "Sort Words";
+        this.tableGermanRow = "German";
+        this.difficulty = "Difficulty";
+        this.swapPos = "Swap Positions";
+        
+        //Training Info
+        this.words = "Words";
+        this.correct = "Correct";     
+        this.shown = "Shown: English";
+        this.gershown = "Shown: German";
+        
     }
 
 }
