@@ -42,6 +42,13 @@ public abstract class Manager {
     protected String correct;
     protected String shown;
     protected String gershown;
+    
+    //Output Messages
+    protected String trainingstarted;
+    protected String correctword;
+    protected String wrongword;
+    protected String finished;
+    
 
     /* 
      => Constructor
@@ -148,5 +155,21 @@ public abstract class Manager {
     
     public String getGerShown(){
         return gershown;
+    }
+    
+    public String getTrainingStarted(){
+        return trainingstarted;
+    }
+    
+    public String getCorrectWord(){
+        return correctword;
+    }
+    
+    public String getWrongWord(){
+        return wrongword;
+    }
+    
+    public String getFinished(){
+        return finished;
     }
 }

@@ -21,30 +21,7 @@ public class VocabTrainer extends javax.swing.JFrame {
         manager = m;
         initComponents();
 
-        manager.getList().append(new Knoten(new Vokabel("a", "A", 1)));
-        manager.getList().append(new Knoten(new Vokabel("b", "B", 2)));
-        manager.getList().append(new Knoten(new Vokabel("c", "C", 3)));
-        manager.getList().append(new Knoten(new Vokabel("d", "D", 4)));
-        manager.getList().append(new Knoten(new Vokabel("e", "E", 5)));
-        manager.getList().append(new Knoten(new Vokabel("f", "F", 4)));
-        manager.getList().append(new Knoten(new Vokabel("g", "G", 3)));
-        manager.getList().append(new Knoten(new Vokabel("h", "H", 2)));
-        manager.getList().append(new Knoten(new Vokabel("a", "A", 1)));
-        manager.getList().append(new Knoten(new Vokabel("b", "B", 2)));
-        manager.getList().append(new Knoten(new Vokabel("c", "C", 3)));
-        manager.getList().append(new Knoten(new Vokabel("d", "D", 4)));
-        manager.getList().append(new Knoten(new Vokabel("e", "E", 5)));
-        manager.getList().append(new Knoten(new Vokabel("f", "F", 4)));
-        manager.getList().append(new Knoten(new Vokabel("g", "G", 3)));
-        manager.getList().append(new Knoten(new Vokabel("h", "H", 2)));
-        manager.getList().append(new Knoten(new Vokabel("a", "A", 1)));
-        manager.getList().append(new Knoten(new Vokabel("b", "B", 2)));
-        manager.getList().append(new Knoten(new Vokabel("c", "C", 3)));
-        manager.getList().append(new Knoten(new Vokabel("d", "D", 4)));
-        manager.getList().append(new Knoten(new Vokabel("e", "E", 5)));
-        manager.getList().append(new Knoten(new Vokabel("f", "F", 4)));
-        manager.getList().append(new Knoten(new Vokabel("g", "G", 3)));
-        manager.getList().append(new Knoten(new Vokabel("h", "H", 2)));
+        
 
         changeGUILanguage(false);
         toggleAccessability(false);
@@ -81,6 +58,8 @@ public class VocabTrainer extends javax.swing.JFrame {
         lbTrainingInfoValue2 = new javax.swing.JLabel();
         progBar = new javax.swing.JProgressBar();
         tgbLang = new javax.swing.JToggleButton();
+        lbOutput = new javax.swing.JLabel();
+        barCorrectPer = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Vokabel Trainer");
@@ -113,7 +92,13 @@ public class VocabTrainer extends javax.swing.JFrame {
 
         lbForTF.setText("Foreign Word");
 
+        btnCheck.setBackground(new java.awt.Color(102, 255, 102));
         btnCheck.setText("Check");
+        btnCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCheckActionPerformed(evt);
+            }
+        });
 
         btnNewTraining.setBackground(new java.awt.Color(255, 255, 255));
         btnNewTraining.setText("New Session");
@@ -124,6 +109,11 @@ public class VocabTrainer extends javax.swing.JFrame {
         });
 
         btnNext.setText("Next Word");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
 
         btnSort.setBackground(new java.awt.Color(0, 102, 102));
         btnSort.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,6 +151,7 @@ public class VocabTrainer extends javax.swing.JFrame {
 
         lbTrainingInfoValue2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
+        tgbLang.setBackground(new java.awt.Color(255, 255, 255));
         tgbLang.setText("Shown");
         tgbLang.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -173,50 +164,58 @@ public class VocabTrainer extends javax.swing.JFrame {
             }
         });
 
+        lbOutput.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        lbOutput.setForeground(new java.awt.Color(0, 0, 102));
+        lbOutput.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        barCorrectPer.setForeground(new java.awt.Color(255, 255, 0));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCheck, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 6, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(lbForTFGer, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCheck, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addComponent(lbForTFGer, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addComponent(tfGerman))
                                         .addGap(27, 27, 27)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(lbForTF, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                                             .addComponent(tfForeign)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(tgbLang, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(tgbLang, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbTrainingInfoCorrect, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(lbTrainingInfoCorrect, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                            .addComponent(lbTrainingInfoWords, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lbTrainingInfoValue2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(lbTrainingInfoWords, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lbTrainingInfoValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(progBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(lbTrainingInfoValue1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                                            .addComponent(lbTrainingInfoValue2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(progBar, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                            .addComponent(barCorrectPer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                        .addGap(12, 12, 12))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lbOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnRemvoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -241,34 +240,6 @@ public class VocabTrainer extends javax.swing.JFrame {
                             .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lbForTFGer)
-                                    .addComponent(lbForTF))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(tfForeign, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tfGerman, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tgbLang, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(45, 45, 45)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(lbTrainingInfoWords, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lbTrainingInfoValue1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(progBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lbTrainingInfoCorrect, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                                    .addComponent(lbTrainingInfoValue2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -287,7 +258,38 @@ public class VocabTrainer extends javax.swing.JFrame {
                                 .addComponent(btnSort, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnRemvoc, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9))))
+                                .addGap(9, 9, 9))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lbForTFGer)
+                                    .addComponent(lbForTF))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(tfForeign, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tfGerman, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tgbLang, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(lbOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbTrainingInfoWords, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lbTrainingInfoValue1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(progBar, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)))
+                                .addGap(11, 11, 11)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lbTrainingInfoValue2, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                                    .addComponent(lbTrainingInfoCorrect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(barCorrectPer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jSeparator2)
                         .addContainerGap())))
@@ -320,10 +322,11 @@ public class VocabTrainer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSortActionPerformed
 
     private void btnNewTrainingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTrainingActionPerformed
-
+        
         activeTraining = true;
         training = new Training(this);
         training.start();
+        barCorrectPer.setValue(0);
     }//GEN-LAST:event_btnNewTrainingActionPerformed
 
     private void tgbLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgbLangActionPerformed
@@ -332,27 +335,33 @@ public class VocabTrainer extends javax.swing.JFrame {
 
     private void tgbLangStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tgbLangStateChanged
         if (tgbLang.isSelected()) {
-           
-            
-            
-            if(tgbtnGuiLang.isSelected()){
+
+            if (tgbtnGuiLang.isSelected()) {
                 tgbLang.setText(manager.getShown());
-            }else{
-                tgbLang.setText("Gezeigt: "+manager.getGermanLanguageName());
+            } else {
+                tgbLang.setText("Gezeigt: " + manager.getGermanLanguageName());
             }
         } else {
 
-            if(tgbtnGuiLang.isSelected()){
+            if (tgbtnGuiLang.isSelected()) {
                 tgbLang.setText(manager.getGerShown());
-            }else{
+            } else {
                 tgbLang.setText("Gezeigt: Deutsch");
             }
-            
-            
+
         }
     }//GEN-LAST:event_tgbLangStateChanged
 
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        training.next();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckActionPerformed
+        training.verify();
+    }//GEN-LAST:event_btnCheckActionPerformed
+
     public void changeGUILanguage(boolean f) { //f = foreign: yes= english/french.. no=german
+
         if (f) {
             lbHeader.setText(manager.getGuiTitle());
             btnAddvoc.setText(manager.getAddButtonText());
@@ -369,13 +378,33 @@ public class VocabTrainer extends javax.swing.JFrame {
             lbAmountText.setText(manager.getAmountWordsCaption());
             lbTrainingInfoWords.setText(manager.getWords() + ": ");
             lbTrainingInfoCorrect.setText(manager.getCorrect() + ": ");
-            
-            if(tgbLang.isSelected()){
+
+            if (tgbLang.isSelected()) {
                 tgbLang.setText(manager.getShown());
-            }else{
+            } else {
                 tgbLang.setText(manager.getGerShown());
-                
+
             }
+
+            switch (getOutputOption()) {
+                case 0:
+                    lbOutput.setText(manager.getTrainingStarted());
+                    break;
+                case 1:
+                    lbOutput.setText(manager.getCorrectWord());
+                    break;
+                case 2:
+                    lbOutput.setText(manager.getWrongWord());
+                    break;
+                case 3:
+                    lbOutput.setText(manager.getFinished());
+                    break;
+                case -1:
+                    break;
+                default:
+                    break;
+            }
+
         } else {
             lbHeader.setText("Vokabeltrainer: " + manager.getGermanLanguageName());
             btnAddvoc.setText("Wort hinzufügen");
@@ -392,10 +421,29 @@ public class VocabTrainer extends javax.swing.JFrame {
             lbAmountText.setText("Größe der Liste");
             lbTrainingInfoWords.setText("Wörter: ");
             lbTrainingInfoCorrect.setText("Richtig: ");
-            if(tgbLang.isSelected()){
-                tgbLang.setText("Gezeigt: "+manager.getGermanLanguageName());
-            }else{
+            if (tgbLang.isSelected()) {
+                tgbLang.setText("Gezeigt: " + manager.getGermanLanguageName());
+            } else {
                 tgbLang.setText("Gezeigt: Deutsch");
+            }
+
+            switch (getOutputOption()) {
+                case 0:
+                    lbOutput.setText("Neues Training begonnen");
+                    break;
+                case 1:
+                    lbOutput.setText("Du hast das richtige Wort gefunden!");
+                    break;
+                case 2:
+                    lbOutput.setText("Falsches Wort eingegeben. Versuche es nochmal!");
+                    break;
+                case 3:
+                    lbOutput.setText("Training beendet!");
+                    break;
+                case -1:
+                    break;
+                default:
+                    break;
             }
 
         }
@@ -435,10 +483,36 @@ public class VocabTrainer extends javax.swing.JFrame {
     }
 
     public void updateTrainingInfos() {
-        lbTrainingInfoValue1.setText((training.getCurrent() - 1) + " / " + manager.getList().getSize());
-        lbTrainingInfoValue2.setText(training.getCorrect() + " / " + (training.getCurrent() - 1));
+        lbTrainingInfoValue1.setText(training.getCurrent() + " / " + manager.getList().getSize());
+        lbTrainingInfoValue2.setText(training.getCorrect() + " / " + training.getCurrent());
         progBar.setMaximum(manager.getList().getSize());
-        progBar.setValue(training.getCurrent() - 1);
+        progBar.setValue(training.getCurrent());
+
+        int x = training.getCurrent();
+        int y = training.getCorrect();
+
+        if (x != 0) {
+
+            float z = (float) y / x *100;
+
+            System.out.println("" + z);
+            
+            barCorrectPer.setForeground(Color.red);
+            
+            if(z >= 50){
+                barCorrectPer.setForeground(Color.yellow);
+            }
+            
+            if(z >= 75){
+                barCorrectPer.setForeground(Color.green);
+            }
+            
+
+            barCorrectPer.setMaximum(training.getCurrent());
+
+            barCorrectPer.setValue(training.getCorrect());
+
+        }
 
     }
 
@@ -452,20 +526,83 @@ public class VocabTrainer extends javax.swing.JFrame {
         }
 
     }
-    
-    public JToggleButton getToggleShown(){
+
+    public JToggleButton getToggleShown() {
         return tgbLang;
     }
 
-    public JTextField getGermanField(){
+    public JTextField getGermanField() {
         return tfGerman;
     }
-    
-    public JTextField getForeignField(){
+
+    public JTextField getForeignField() {
         return tfForeign;
     }
-    
+
+    public void setOutputText(int opt) {
+        switch (opt) {
+            case 0:
+                lbOutput.setForeground(Color.MAGENTA);
+
+                if (tgbtnGuiLang.isSelected()) {
+                    lbOutput.setText(manager.getTrainingStarted());
+                } else {
+                    lbOutput.setText("Neues Training begonnen");
+                }
+                break;
+
+            case 1:
+                lbOutput.setForeground(Color.green);
+                if (tgbtnGuiLang.isSelected()) {
+                    lbOutput.setText(manager.getCorrectWord());
+                } else {
+                    lbOutput.setText("Du hast das richtige Wort gefunden!");
+                }
+                break;
+            case 2:
+                lbOutput.setForeground(Color.red);
+                if (tgbtnGuiLang.isSelected()) {
+                    lbOutput.setText(manager.getWrongWord());
+                } else {
+                    lbOutput.setText("Falsches Wort eingegeben. Versuche es nochmal!");
+                }
+                break;
+            case 3:
+                lbOutput.setForeground(Color.MAGENTA);
+                if (tgbtnGuiLang.isSelected()) {
+                    lbOutput.setText(manager.getFinished());
+                } else {
+                    lbOutput.setText("Training beendet!");
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public int getOutputOption() {
+        String y = lbOutput.getText();
+
+        if (y.equalsIgnoreCase(manager.getTrainingStarted()) || y.equalsIgnoreCase("Neues Training begonnen")) {
+            return 0;
+        }
+
+        if (y.equalsIgnoreCase(manager.getCorrectWord()) || y.equalsIgnoreCase("Du hast das richtige Wort gefunden!")) {
+            return 1;
+        }
+
+        if (y.equalsIgnoreCase(manager.getWrongWord()) || y.equalsIgnoreCase("Falsches Wort eingegeben. Versuche es nochmal!")) {
+            return 2;
+        }
+
+        if (y.equalsIgnoreCase(manager.getFinished()) || y.equalsIgnoreCase("Training beendet!")) {
+            return 3;
+        }
+        return -1;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barCorrectPer;
     private javax.swing.JButton btnAddvoc;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnCheck;
@@ -482,6 +619,7 @@ public class VocabTrainer extends javax.swing.JFrame {
     private javax.swing.JLabel lbForTF;
     private javax.swing.JLabel lbForTFGer;
     private javax.swing.JLabel lbHeader;
+    private javax.swing.JLabel lbOutput;
     private javax.swing.JLabel lbTrainingInfoCorrect;
     private javax.swing.JLabel lbTrainingInfoValue1;
     private javax.swing.JLabel lbTrainingInfoValue2;

@@ -1,6 +1,8 @@
 package alexsheehan.guis;
 
 import alexsheehan.kel.AlexKEL;
+import alexsheehan.kel.EnglishManager;
+import alexsheehan.kel.FrenchManager;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -140,12 +142,12 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnglishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnglishActionPerformed
-        new VocabTrainer(AlexKEL.getEnglish()).setVisible(true);
+        new VocabTrainer(new EnglishManager()).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnEnglishActionPerformed
 
     private void btnFrzActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrzActionPerformed
-        new VocabTrainer(AlexKEL.getFrench()).setVisible(true);
+        new VocabTrainer(new FrenchManager()).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnFrzActionPerformed
 

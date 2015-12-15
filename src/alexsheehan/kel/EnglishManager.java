@@ -41,6 +41,12 @@ public class EnglishManager extends Manager{
         this.shown = "Shown: English";
         this.gershown = "Shown: German";
         
+        //Output Messages
+        this.trainingstarted = "New Training started";
+        this.correctword = "You entered the correct word!";
+        this.wrongword = "This is not correct. Try again!";
+        this.finished = "You finished your training! Score:";
+        
     }
 
 }
