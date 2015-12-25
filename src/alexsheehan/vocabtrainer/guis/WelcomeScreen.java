@@ -1,8 +1,8 @@
-package alexsheehan.guis;
+package alexsheehan.vocabtrainer.guis;
 
-import alexsheehan.kel.AlexKEL;
-import alexsheehan.kel.EnglishManager;
-import alexsheehan.kel.FrenchManager;
+import alexsheehan.vocabtrainer.VocabularyTrainerProgram;
+import alexsheehan.vocabtrainer.EnglishManager;
+import alexsheehan.vocabtrainer.FrenchManager;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,8 +36,6 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Vokabeltrainer - Menü");
 
-        bgpanel.setBackground(new java.awt.Color(204, 204, 204));
-
         prjnamelabel.setFont(new java.awt.Font("Calibri", 1, 48)); // NOI18N
         prjnamelabel.setForeground(new java.awt.Color(0, 102, 0));
         prjnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -46,10 +44,12 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         lbalexsheehan.setText("Alex Sheehan");
 
         btnFunktions.setBackground(new java.awt.Color(0, 153, 153));
+        btnFunktions.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnFunktions.setForeground(new java.awt.Color(255, 255, 255));
         btnFunktions.setText("Welche Funktionen hat das Programm?");
 
         btnUsage.setBackground(new java.awt.Color(0, 153, 153));
+        btnUsage.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnUsage.setForeground(new java.awt.Color(255, 255, 255));
         btnUsage.setText("Wie bediene ich das Programm?");
         btnUsage.addActionListener(new java.awt.event.ActionListener() {
@@ -59,6 +59,7 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         });
 
         btnEnglish.setBackground(new java.awt.Color(102, 0, 0));
+        btnEnglish.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnEnglish.setForeground(new java.awt.Color(255, 255, 255));
         btnEnglish.setText("Englische Vokabeln");
         btnEnglish.addActionListener(new java.awt.event.ActionListener() {
@@ -68,6 +69,7 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         });
 
         btnFrz.setBackground(new java.awt.Color(204, 102, 0));
+        btnFrz.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnFrz.setForeground(new java.awt.Color(255, 255, 255));
         btnFrz.setText("Französische Vokabeln");
         btnFrz.addActionListener(new java.awt.event.ActionListener() {

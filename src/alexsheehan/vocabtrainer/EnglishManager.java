@@ -1,12 +1,12 @@
-package alexsheehan.kel;
+package alexsheehan.vocabtrainer;
 
-import alexsheehan.kel.*;
 import java.awt.Color;
 
 public class EnglishManager extends Manager{
     
     public EnglishManager(){
         super(); //Konstruktor von Manager übernehmen
+        this.fileName = "lang_english_list.txt";
         this.lang = Language.ENGLISH; //Sprach-Enum festlegen
         
         //Sonstiges
@@ -34,6 +34,7 @@ public class EnglishManager extends Manager{
         this.tableGermanRow = "German";
         this.difficulty = "Difficulty";
         this.swapPos = "Swap Positions";
+        this.sort = "Sort";
         
         //Training Info
         this.words = "Words";
@@ -46,6 +47,8 @@ public class EnglishManager extends Manager{
         this.correctword = "You entered the correct word!";
         this.wrongword = "This is not correct. Try again!";
         this.finished = "You finished your training! Score:";
+        
+        VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptFileToList(this);
         
     }
 

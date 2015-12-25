@@ -1,9 +1,9 @@
-package alexsheehan.guis;
+package alexsheehan.vocabtrainer.guis;
 
-import alexsheehan.datenstrk.Liste;
-import alexsheehan.kel.Manager;
-import alexsheehan.kel.Miscellaneous;
-import alexsheehan.kel.Vokabel;
+import alexsheehan.vocabtrainer.datast.Liste;
+import alexsheehan.vocabtrainer.Manager;
+import alexsheehan.vocabtrainer.Miscellaneous;
+import alexsheehan.vocabtrainer.Vokabel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,14 +14,14 @@ public class SortGUI extends javax.swing.JFrame {
     
     private VocabTrainer trainer;
     private boolean tg;
-    private Object[] ar;
+    private Object[] array;
     
     public SortGUI(VocabTrainer x, boolean tg) {
         this.tg = tg;
         trainer = x;
         initComponents();
-        ar = trainer.getManager().getList().toArray();
-        outputList(x.getManager().getList());
+        array = trainer.getManager().getList().toArray();
+        outputList(array);
         updateSwapComboBoxes();
         setLanguage(tg);
     }
@@ -41,10 +41,20 @@ public class SortGUI extends javax.swing.JFrame {
         btnSwap = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         cbOptions = new javax.swing.JComboBox();
+        lbMsg = new javax.swing.JLabel();
+        btnSort = new javax.swing.JButton();
 
         jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                onClose(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -92,6 +102,16 @@ public class SortGUI extends javax.swing.JFrame {
 
         cbOptions.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "ABC (Deutsch)", "ABC (Fremdsprache)", "CBA (Deutsch)", "CBA (Fremdsprache)", "Schwierigkeit ↑", "Schwierigkeit ↓", "Zufällig" }));
 
+        lbMsg.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbMsg.setForeground(new java.awt.Color(153, 0, 0));
+
+        btnSort.setText("Sort");
+        btnSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSortActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,27 +119,33 @@ public class SortGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbCaption, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSwap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator3)
-                    .addComponent(cbOptions, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSwap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator3)
+                            .addComponent(cbOptions, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(combo1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                                .addComponent(combo2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnSort, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(combo1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                        .addComponent(combo2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbCaption, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbMsg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lbCaption, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbCaption, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(lbMsg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -131,7 +157,9 @@ public class SortGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(cbOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSort))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                     .addComponent(jSeparator1))
                 .addContainerGap())
@@ -142,13 +170,40 @@ public class SortGUI extends javax.swing.JFrame {
 
     private void btnSwapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwapActionPerformed
         
+        int x = Integer.parseInt(combo1.getSelectedItem().toString());
+        int y = Integer.parseInt(combo2.getSelectedItem().toString());
+        
+        if(x == y){
+            lbMsg.setText("Die Positionen der Vokabeln müssen unterschiedlich sein!");
+            return;
+        }else{
+            Object zw = array[x-1];
+            
+            array[x-1] = array[y-1];
+            array[y-1] = zw;
+        }
+        
+        outputList(array);
+        
         
         
     }//GEN-LAST:event_btnSwapActionPerformed
 
-    public void outputList(Liste x) {
+    private void onClose(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onClose
+   // trainer.setEnabled(true);
+    }//GEN-LAST:event_onClose
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+         trainer.setEnabled(true);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSortActionPerformed
+
+    public void outputList(Object[] ar) {
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-        dtm.setRowCount(x.getSize());
+        dtm.setRowCount(ar.length);
         
         jTable1.setRowHeight((jScrollPane1.getHeight() - 5) / 12);
         
@@ -186,10 +241,11 @@ public class SortGUI extends javax.swing.JFrame {
             Manager mng = trainer.getManager();
             lbCaption.setText(mng.getSortGUICaption());
             btnSwap.setText(mng.getSwapText());
+            btnSort.setText(mng.getSortString());
         } else {
             lbCaption.setText("Vokabeln sortieren");
             btnSwap.setText("Positionen tauschen");   
-            
+            btnSort.setText("Sortieren");
         }
     }
     
@@ -217,6 +273,7 @@ public class SortGUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSort;
     private javax.swing.JButton btnSwap;
     private javax.swing.JComboBox cbOptions;
     private javax.swing.JComboBox combo1;
@@ -227,5 +284,6 @@ public class SortGUI extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel lbCaption;
+    private javax.swing.JLabel lbMsg;
     // End of variables declaration//GEN-END:variables
 }

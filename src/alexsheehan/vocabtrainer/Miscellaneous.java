@@ -1,4 +1,11 @@
-package alexsheehan.kel;
+package alexsheehan.vocabtrainer;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 
 public class Miscellaneous { //Sonstige nützliche Funktionen, teilweise von mehreren Klassen benutzt
 
@@ -10,7 +17,8 @@ public class Miscellaneous { //Sonstige nützliche Funktionen, teilweise von meh
         }
         return sb.toString();
     }
-    
+
+   
     
 
 }

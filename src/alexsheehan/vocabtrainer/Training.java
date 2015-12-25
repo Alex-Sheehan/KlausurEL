@@ -1,6 +1,6 @@
-package alexsheehan.kel;
+package alexsheehan.vocabtrainer;
 
-import alexsheehan.guis.VocabTrainer;
+import alexsheehan.vocabtrainer.guis.VocabTrainer;
 
 public class Training {
 

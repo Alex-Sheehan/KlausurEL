@@ -1,4 +1,4 @@
-package alexsheehan.guis;
+package alexsheehan.vocabtrainer.guis;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +20,7 @@ public class Bedienung extends javax.swing.JFrame {
     public Bedienung() throws IOException {
         initComponents();
         
-        jEditorPane1.setPage(Bedienung.class.getResource("Bedienung.html"));
-        jEditorPane1.setEditable(false);
+     
     }
 
     /**

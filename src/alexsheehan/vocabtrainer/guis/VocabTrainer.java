@@ -1,10 +1,14 @@
-package alexsheehan.guis;
+package alexsheehan.vocabtrainer.guis;
 
-import alexsheehan.datenstrk.Knoten;
-import alexsheehan.kel.Manager;
-import alexsheehan.kel.Training;
-import alexsheehan.kel.Vokabel;
+import alexsheehan.vocabtrainer.datast.Knoten;
+import alexsheehan.vocabtrainer.Manager;
+import alexsheehan.vocabtrainer.Training;
+import alexsheehan.vocabtrainer.VocabularyTrainerProgram;
+import alexsheehan.vocabtrainer.Vokabel;
 import java.awt.Color;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -318,6 +322,7 @@ public class VocabTrainer extends javax.swing.JFrame {
     }//GEN-LAST:event_tgbtnGuiLangActionPerformed
 
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
+        this.setEnabled(false);
         new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);
     }//GEN-LAST:event_btnSortActionPerformed
 
@@ -465,6 +470,11 @@ public class VocabTrainer extends javax.swing.JFrame {
 
     public void addVokabel(Vokabel q) {
         manager.addVokabel(q);
+        try {
+            VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptToFile(manager);
+        } catch (IOException ex) {
+            Logger.getLogger(VocabTrainer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         updateWordCount();
     }
 

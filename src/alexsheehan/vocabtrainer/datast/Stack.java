@@ -1,4 +1,4 @@
-package alexsheehan.datenstrk;
+package alexsheehan.vocabtrainer.datast;
 
 
 public class Stack {

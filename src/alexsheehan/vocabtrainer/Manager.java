@@ -1,13 +1,13 @@
-package alexsheehan.kel;
+package alexsheehan.vocabtrainer;
 
-import alexsheehan.datenstrk.Knoten;
-import alexsheehan.kel.*;
-import alexsheehan.datenstrk.Liste;
+import alexsheehan.vocabtrainer.datast.Knoten;
+import alexsheehan.vocabtrainer.datast.Liste;
 
 public abstract class Manager {
 
     //Vokabel Liste 
-    private Liste vkList;
+    protected Liste vkList;
+    protected String fileName;
 
     //Sonstiges
     protected Language lang; //Language Enum
@@ -36,6 +36,7 @@ public abstract class Manager {
     protected String tableGermanRow;
     protected String difficulty;
     protected String swapPos;
+    protected String sort;
 
     //Training info
     protected String words;
@@ -49,12 +50,14 @@ public abstract class Manager {
     protected String wrongword;
     protected String finished;
     
+    
 
     /* 
      => Constructor
      */
     public Manager() {
         vkList = new Liste();
+        
     }
 
     /*
@@ -171,5 +174,13 @@ public abstract class Manager {
     
     public String getFinished(){
         return finished;
+    }
+    
+    public String getFileName(){
+        return fileName;
+    }
+    
+    public String getSortString(){
+        return sort;
     }
 }

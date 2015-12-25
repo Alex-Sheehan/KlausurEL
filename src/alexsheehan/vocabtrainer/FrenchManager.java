@@ -1,11 +1,10 @@
-package alexsheehan.kel;
-
-import alexsheehan.kel.*;
+package alexsheehan.vocabtrainer;
 
 public class FrenchManager extends Manager{
 
     public FrenchManager(){
         super(); //Konstruktor von Manager übernehmen
+        this.fileName = "lang_french_list.txt";
         this.lang = Language.FRENCH; //Sprach-Enum festlegen
         
         //Sonstiges
@@ -33,12 +32,15 @@ public class FrenchManager extends Manager{
         this.tableGermanRow = "Allemand";
         this.difficulty = "Difficulté";
         this.swapPos = "Échange les positions";
+        this.sort = "--//--sort";
         
         //Training Info
         this.words = "Mots";
         this.correct = "Correcte";  
         this.shown = "Montré: Francais";
         this.gershown = "Montré: Allemand";
+        
+        VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptFileToList(this);
         
     }
     

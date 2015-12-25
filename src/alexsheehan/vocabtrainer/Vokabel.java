@@ -1,6 +1,4 @@
-package alexsheehan.kel;
-
-import alexsheehan.kel.*;
+package alexsheehan.vocabtrainer;
 
 public class Vokabel {
 

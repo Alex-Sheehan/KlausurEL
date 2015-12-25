@@ -1,7 +1,7 @@
-package alexsheehan.guis;
+package alexsheehan.vocabtrainer.guis;
 
-import alexsheehan.kel.Miscellaneous;
-import alexsheehan.kel.Vokabel;
+import alexsheehan.vocabtrainer.Miscellaneous;
+import alexsheehan.vocabtrainer.Vokabel;
 
 /**
  *
@@ -161,7 +161,7 @@ public class AddGUI extends javax.swing.JFrame {
             trainer.addVokabel(new Vokabel(x, y, z));
             this.dispose();
         } else {
-            lbError.setText("Kein Textfeld darf leer sein!");
+            lbError.setText("Bitte Textfelder ausfüllen!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
