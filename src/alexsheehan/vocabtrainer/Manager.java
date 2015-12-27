@@ -30,6 +30,7 @@ public abstract class Manager {
     protected String checkButton; //Überprüfen
     protected String newTraining; //Neues Training
     protected String nextWord; //Nächstes Wort
+    protected String endTraining; //Training beenden?
 
     //Sort GUI
     protected String sortGUICaption;
@@ -37,27 +38,30 @@ public abstract class Manager {
     protected String difficulty;
     protected String swapPos;
     protected String sort;
+    protected String nochangesrevertable;
+    protected String reverted;
+    protected String chsaved;
+    protected String savech;
+    protected String revertch;
 
     //Training info
     protected String words;
     protected String correct;
     protected String shown;
     protected String gershown;
-    
+
     //Output Messages
     protected String trainingstarted;
     protected String correctword;
     protected String wrongword;
     protected String finished;
-    
-    
 
     /* 
      => Constructor
      */
     public Manager() {
         vkList = new Liste();
-        
+
     }
 
     /*
@@ -65,6 +69,10 @@ public abstract class Manager {
      */
     public Liste getList() { //Die Liste
         return vkList;
+    }
+
+    public void setList(Liste vkl) {
+        vkList = vkl;
     }
 
     public Language getLanguage() {
@@ -155,32 +163,56 @@ public abstract class Manager {
     public String getShown() {
         return shown;
     }
-    
-    public String getGerShown(){
+
+    public String getGerShown() {
         return gershown;
     }
-    
-    public String getTrainingStarted(){
+
+    public String getTrainingStarted() {
         return trainingstarted;
     }
-    
-    public String getCorrectWord(){
+
+    public String getCorrectWord() {
         return correctword;
     }
-    
-    public String getWrongWord(){
+
+    public String getWrongWord() {
         return wrongword;
     }
-    
-    public String getFinished(){
+
+    public String getFinished() {
         return finished;
     }
-    
-    public String getFileName(){
+
+    public String getFileName() {
         return fileName;
     }
-    
-    public String getSortString(){
+
+    public String getSortString() {
         return sort;
+    }
+
+    public String getEndTraining() {
+        return endTraining;
+    }
+
+    public String getNochangesrevertable() {
+        return nochangesrevertable;
+    }
+
+    public String getReverted() {
+        return reverted;
+    }
+
+    public String getChsaved() {
+        return chsaved;
+    }
+
+    public String getSavech() {
+        return savech;
+    }
+
+    public String getRevertch() {
+        return revertch;
     }
 }

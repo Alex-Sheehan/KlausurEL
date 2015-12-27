@@ -102,5 +102,6 @@ public class Training {
         trainer.updateTrainingInfos();
         trainer.toggleAccessability(false);
         trainer.setOutputText(3);
+        trainer.activeTraining = false;
     }
 }

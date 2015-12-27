@@ -142,4 +142,18 @@ public class Liste {
         this.size = size;
     }
 
+    public static Liste fromArray(Object[] array){
+        
+        
+        Liste l = new Liste();
+          
+        for(Object o : array){
+            Knoten k = new Knoten(o);
+            l.append(k);
+        }
+        
+        return l;
+        
+    }
+    
 }

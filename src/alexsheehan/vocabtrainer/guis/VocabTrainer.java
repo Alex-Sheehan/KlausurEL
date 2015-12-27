@@ -18,19 +18,19 @@ import javax.swing.border.LineBorder;
 public class VocabTrainer extends javax.swing.JFrame {
 
     private Manager manager;
-    private boolean activeTraining;
-    private Training training;
+    public boolean activeTraining;
+    protected Training training;
 
     public VocabTrainer(Manager m) {
         manager = m;
         initComponents();
 
-        
-
         changeGUILanguage(false);
         toggleAccessability(false);
-        
+
         btnNewTraining.setEnabled(manager.getList().getSize() >= 1);
+        btnSort.setEnabled(manager.getList().getSize() >= 1);
+        btnRemvoc.setEnabled(manager.getList().getSize() >= 1);
     }
 
     @SuppressWarnings("unchecked")
@@ -281,8 +281,8 @@ public class VocabTrainer extends javax.swing.JFrame {
                                     .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tgbLang, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(lbOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lbOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbTrainingInfoWords, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -303,7 +303,44 @@ public class VocabTrainer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddvocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddvocActionPerformed
-        new AddGUI(this).setVisible(true);
+
+        if (activeTraining) {
+            if (tgbtnGuiLang.isSelected()) {
+                if (btnAddvoc.getText().equalsIgnoreCase(manager.getEndTraining())) {
+                    training.initEnd();
+                    this.setEnabled(false);
+                    new AddGUI(this).setVisible(true);
+
+                    btnAddvoc.setText(manager.getAddButtonText());
+
+                } else {
+                    btnAddvoc.setText(manager.getEndTraining());
+                }
+
+            } else {
+                if (btnAddvoc.getText().equalsIgnoreCase("Training beenden?")) {
+                    training.initEnd();
+                    this.setEnabled(false);
+                    new AddGUI(this).setVisible(true);
+
+                    btnAddvoc.setText("Wort hinzufügen");
+
+                } else {
+                    btnAddvoc.setText("Training beenden?");
+                }
+
+            }
+
+        } else {
+
+            this.setEnabled(false);
+            new AddGUI(this).setVisible(true);
+            if (tgbtnGuiLang.isSelected()) {
+                btnAddvoc.setText(manager.getAddButtonText());
+            } else {
+                btnAddvoc.setText("Wort hinzufügen");
+            }
+        }
     }//GEN-LAST:event_btnAddvocActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -322,12 +359,47 @@ public class VocabTrainer extends javax.swing.JFrame {
     }//GEN-LAST:event_tgbtnGuiLangActionPerformed
 
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
-        this.setEnabled(false);
-        new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);
+
+        if (activeTraining) {
+            if (tgbtnGuiLang.isSelected()) {
+                if (btnSort.getText().equalsIgnoreCase(manager.getEndTraining())) {
+                    training.initEnd();
+                    this.setEnabled(false);
+                    new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);
+
+                    btnSort.setText(manager.getSortButtonText());
+
+                } else {
+                    btnSort.setText(manager.getEndTraining());
+                }
+
+            } else {
+                if (btnSort.getText().equalsIgnoreCase("Training beenden?")) {
+                    training.initEnd();
+                    this.setEnabled(false);
+                    new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);
+
+                    btnSort.setText("Vokabeln Sortieren");
+
+                } else {
+                    btnSort.setText("Training beenden?");
+                }
+            }
+
+        } else {
+
+            this.setEnabled(false);
+            new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);
+            if (tgbtnGuiLang.isSelected()) {
+                btnSort.setText(manager.getSortButtonText());
+            } else {
+                btnSort.setText("Vokabeln Sortieren");
+            }
+        }
     }//GEN-LAST:event_btnSortActionPerformed
 
     private void btnNewTrainingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTrainingActionPerformed
-        
+
         activeTraining = true;
         training = new Training(this);
         training.start();
@@ -463,8 +535,12 @@ public class VocabTrainer extends javax.swing.JFrame {
 
         if (manager.getList().getSize() == 0) {
             btnNewTraining.setEnabled(false);
+            btnSort.setEnabled(false);
+            btnRemvoc.setEnabled(false);
         } else if (manager.getList().getSize() >= 1) {
             btnNewTraining.setEnabled(true);
+            btnSort.setEnabled(true);
+            btnRemvoc.setEnabled(true);
         }
     }
 
@@ -476,6 +552,7 @@ public class VocabTrainer extends javax.swing.JFrame {
             Logger.getLogger(VocabTrainer.class.getName()).log(Level.SEVERE, null, ex);
         }
         updateWordCount();
+
     }
 
     public void toggleAccessability(boolean n) {
@@ -503,20 +580,19 @@ public class VocabTrainer extends javax.swing.JFrame {
 
         if (x != 0) {
 
-            float z = (float) y / x *100;
+            float z = (float) y / x * 100;
 
             System.out.println("" + z);
-            
+
             barCorrectPer.setForeground(Color.red);
-            
-            if(z >= 50){
+
+            if (z >= 50) {
                 barCorrectPer.setForeground(Color.yellow);
             }
-            
-            if(z >= 75){
+
+            if (z >= 75) {
                 barCorrectPer.setForeground(Color.green);
             }
-            
 
             barCorrectPer.setMaximum(training.getCurrent());
 
