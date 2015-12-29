@@ -3,20 +3,23 @@ package alexsheehan.vocabtrainer.guis;
 import alexsheehan.vocabtrainer.Miscellaneous;
 import alexsheehan.vocabtrainer.Vokabel;
 
-/**
- *
- * @author Alex
- */
+
 public class AddGUI extends javax.swing.JFrame {
+    
+    /*
+    @AlexSheehan Klausurersatzleistung
+    => Die Klasse AddGUI
+    - GUI zum hinzufügen von Vokabeln
+    */
 
-    VocabTrainer trainer;
+    VocabTrainer trainer; //Der Vokabeltrainer
 
-    public AddGUI(VocabTrainer t) {
-        initComponents();
-        trainer = t;
-        lbForeign.setText(trainer.getManager().getTfLabelInGerman() + " Wort:");
-        lbVal.setText("" + jSlider1.getValue());
-        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue()));
+    public AddGUI(VocabTrainer t) { //Kontruktor - Vokabeltrainer als Übergabeparameter
+        initComponents(); //Netbeans initialisiert alle GUI Elemente
+        trainer = t; 
+        lbForeign.setText(trainer.getManager().getTfLabelInGerman() + " Wort:"); //Nimmt passendes Wort für TF Label aus Manager (entw. "Englisches" oder "Französisches")
+        lbVal.setText("" + jSlider1.getValue()); //Slider Wert setzen
+        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue())); //Sterne passend zum Slider-Wert setzen
 
     }
 
@@ -140,31 +143,33 @@ public class AddGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jSlider1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jSlider1PropertyChange
-        lbVal.setText("" + jSlider1.getValue());
-        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue()));
+        //Slider Wert verändert:
+        lbVal.setText("" + jSlider1.getValue());  //Label Wert aktualisieren
+        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue()));//Sterne aktualisieren
     }//GEN-LAST:event_jSlider1PropertyChange
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
-        lbVal.setText("" + jSlider1.getValue());
-        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue()));
+        //Slider Wert verändert:
+        lbVal.setText("" + jSlider1.getValue()); //Label Wert aktualisieren
+        lbStars.setText(Miscellaneous.getStars(jSlider1.getValue())); //Sterne aktualisieren
     }//GEN-LAST:event_jSlider1StateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String x = tfGerman.getText();
-        String y = tfForeign.getText();
-        int z = jSlider1.getValue();
+        String x = tfGerman.getText(); //Text des Deutschen Feldes
+        String y = tfForeign.getText(); //Text des Fremdsprachen Feldes
+        int z = jSlider1.getValue(); // Slider Wert
 
-        if (!(x.isEmpty()) && !(y.isEmpty())) {
-            trainer.addVokabel(new Vokabel(x, y, z));
-            trainer.setEnabled(true);
-            this.dispose();
-        } else {
-            lbError.setText("Bitte Textfelder ausfüllen!");
+        if (!(x.isEmpty()) && !(y.isEmpty())) { //Solange kein Feld leer ist
+            trainer.addVokabel(new Vokabel(x, y, z)); //Neue Vokabel über VocabTrainer's Funktion addVokabel hinzufügen
+            trainer.setEnabled(true); //Trainer wieder aktivieren
+            this.dispose(); //GUI schliessen
+        } else { //Sonst
+            lbError.setText("Bitte Textfelder ausfüllen!"); //Fehlermeldung ausgeben
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-         trainer.setEnabled(true);
+         trainer.setEnabled(true); //Trainer wieder aktivieren
     }//GEN-LAST:event_formWindowClosing
 
 

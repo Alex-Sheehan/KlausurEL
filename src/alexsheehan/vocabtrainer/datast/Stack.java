@@ -1,12 +1,12 @@
 package alexsheehan.vocabtrainer.datast;
 
 
-public class Stack {
+public class Stack { //Der Stack (2. Datenstruktur)
 
     private StackKnoten head; //Head des Stacks
     private int size; //Größe des Stacks
 
-    //Konstruktor
+    //Konstruktor, head = null, Größe = 0
     public Stack() {
         head = null;
         size = 0;
@@ -26,30 +26,30 @@ public class Stack {
         return size;
     }
 
-    //Push Methode
+    //Push Methode - neues Knoten oben auf Stapel legen
     public void push(StackKnoten x) { //x - Knoten, der hinzugefügt wird
         if( size > 0){
             x.setNext(head);     
         }
             head = x;           
             size++;             
-            System.out.print("Added "+size);
+           
     }
 
-    //Pop Methode
+    //Pop Methode - oberstes Objekt entfernen
     public void pop() {
-        if(head.getNext()== null){ 
-            head = null;         
-            size = 0;             
-        }else{
-            head = head.getNext();
-            size--;
+        if(head.getNext()== null){  //Wenn letzen Objekt auf Stapel 
+            head = null;     //head = null    
+            size = 0;     //Größe 0      
+        }else{ //Sonst
+            head = head.getNext(); //Head = Head's nächstes
+            size--; //Größe -1
         }
     }
     
-    public void flush(){
-        head = null;
-        size = 0;
+    public void flush(){ //Stack leeren
+        head = null; //Head = null
+        size = 0; //Größe 0
     }
 
 }

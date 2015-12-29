@@ -3,33 +3,40 @@ package alexsheehan.vocabtrainer.guis;
 import alexsheehan.vocabtrainer.datast.Liste;
 import alexsheehan.vocabtrainer.Manager;
 import alexsheehan.vocabtrainer.Miscellaneous;
+import alexsheehan.vocabtrainer.VocabularyTrainerProgram;
 import alexsheehan.vocabtrainer.Vokabel;
 import alexsheehan.vocabtrainer.datast.Knoten;
 import alexsheehan.vocabtrainer.datast.Stack;
 import alexsheehan.vocabtrainer.datast.StackKnoten;
 import java.awt.Color;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Alex
- */
+/*
+    @AlexSheehan Klausurersatzleistung
+    => Die Klasse SortGUI
+    - GUI zum sortieren von Vokabeln
+    - Stellt Liste in Tabelle da
+    - Comboboxen & Buttons zum Sortieren, Rückgängigmachen & speichern
+    */
 public class SortGUI extends javax.swing.JFrame {
 
-    private VocabTrainer trainer;
-    private boolean tg;
-    private Object[] array;
-    private Stack changes;
+    private VocabTrainer trainer;//Der Vokabel Trainer
+    private boolean tg; //True: SortGUI in Fremdsprache, false: SortGUI auf Deutsch
+    private Object[] array; //Object[] zum entfernen & in Liste anzeigen
+    private Stack changes; //Stack um Änderungen rückgängig machen zu können
 
-    public SortGUI(VocabTrainer x, boolean tg) {
+    public SortGUI(VocabTrainer x, boolean tg) {//Konstruktor- VocabTrainer & Sprach-Boolean als Übergabeparameter
         this.tg = tg;
         trainer = x;
-        initComponents();
-        changes = new Stack();
-        array = trainer.getManager().getList().toArray();
-        outputList(array);
-        updateSwapComboBoxes();
-        setLanguage(tg);
+        initComponents();//Netbeans initialisiert GUI Komponenten
+        changes = new Stack(); //Neuer Stack 
+        array = trainer.getManager().getList().toArray(); //Array wird aus der linearen Liste erstellt
+        outputList(array); //Liste in Tabelle ausgegeben    
+        updateSwapComboBoxes(); //Combobox zum Tauschen aktualisiert
+        setLanguage(tg); //GUI-Texte werden in passender Sprache eingestellt
     }
 
     @SuppressWarnings("unchecked")
@@ -200,153 +207,183 @@ public class SortGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSwapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwapActionPerformed
-
+        
+        /*
+        Die Positionen zweier Vokabeln werden getauscht
+        */
+        
+        //Positionen von Comboboxen abgelesen
         int x = Integer.parseInt(combo1.getSelectedItem().toString());
         int y = Integer.parseInt(combo2.getSelectedItem().toString());
 
-        if (x == y) {
+        if (x == y) { //Versuch, die Vokabel mit sich selbst zu tauschen
             lbMsg.setText("Die Positionen der Vokabeln müssen unterschiedlich sein!");
             return;
         } else {
+            //Neue Reversible Änderung
+            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array))); //Array muss geklont werden, damit das im Stack nicht immer mitverändert wird....
 
-            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));
+            
 
-            System.out.print(((Vokabel) changes.getHead().getContent()[0]).getGerman());
+            Object zw = array[x - 1]; //Zwischenspeicher
 
-            Object zw = array[x - 1];
-
+            //Simpler Tausch
             array[x - 1] = array[y - 1];
             array[y - 1] = zw;
         }
-
+        //Liste ausgegeben
         outputList(array);
 
 
     }//GEN-LAST:event_btnSwapActionPerformed
 
     private void onClose(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onClose
-        // trainer.setEnabled(true);
+        
     }//GEN-LAST:event_onClose
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        //Beim Schließen VocabTrainer wieder aktivieren
         trainer.setEnabled(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
 
+        /*
+        Sortier Button geklickt, Combobox wird ausgelesen um Sortierart zu bestimmen
+        */
+        
+        //Zufälliges Anordnen
         if (cbOptions.getSelectedItem().toString().equalsIgnoreCase("Zufällig")) {
-            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));
-            Miscellaneous.shuffleArray(array);
-            outputList(array);
+            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array))); //Reversible Änderung
+            Miscellaneous.shuffleArray(array); //Shuffle Methode aus Misc.
+            outputList(array); //Liste ausgeben
             return;
         }
 
+        //Schwierigkeit aufsteigend
         if (cbOptions.getSelectedItem().toString().equalsIgnoreCase("Schwierigkeit (aufs.)")) {
-            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));
-            Miscellaneous.insertionSortDif(array, false);
-            outputList(array);
+            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array))); //Reversible Änderung
+            Miscellaneous.insertionSortDif(array, false); //Sortier Methode aus Misc.
+            outputList(array); //Liste ausgeben
             return;
         }
 
         if (cbOptions.getSelectedItem().toString().equalsIgnoreCase("Schwierigkeit (abst.)")) {
-            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));
-            Miscellaneous.insertionSortDif(array, true);
-            outputList(array);
+            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
+            Miscellaneous.insertionSortDif(array, true);//Sortier Methode aus Misc.
+            outputList(array);//Liste ausgeben
             return;
         }
         
         if(cbOptions.getSelectedItem().toString().equalsIgnoreCase("ABC (Deutsch)")){
-            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));
-            Miscellaneous.insertionSortGerAlph(array, false);
-            outputList(array);
+            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
+            Miscellaneous.insertionSortGerAlph(array, false);//Sortier Methode aus Misc.
+            outputList(array);//Liste ausgeben
             return;
         }
         
         if(cbOptions.getSelectedItem().toString().equalsIgnoreCase("CBA (Deutsch)")){
-            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));
-            Miscellaneous.insertionSortGerAlph(array, true);
-            outputList(array);
+            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
+            Miscellaneous.insertionSortGerAlph(array, true);//Sortier Methode aus Misc.
+            outputList(array);//Liste ausgeben
             return;
         }
         
          if(cbOptions.getSelectedItem().toString().equalsIgnoreCase("ABC (Fremdsprache)")){
-            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));
-            Miscellaneous.insertionSortForAlph(array, false);
-            outputList(array);
+            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
+            Miscellaneous.insertionSortForAlph(array, false);//Sortier Methode aus Misc.
+            outputList(array);//Liste ausgeben
             return;
         }
         
         if(cbOptions.getSelectedItem().toString().equalsIgnoreCase("CBA (Fremdsprache)")){
-            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));
-            Miscellaneous.insertionSortForAlph(array, true);
-            outputList(array);
+            changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
+            Miscellaneous.insertionSortForAlph(array, true);//Sortier Methode aus Misc.
+            outputList(array);//Liste ausgeben
             return;
         }
     }//GEN-LAST:event_btnSortActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        trainer.getManager().setList(Liste.fromArray(array));
-        changes.flush();
+        /*
+        Änderungen speichern
+        */
+        
+        trainer.getManager().setList(Liste.fromArray(array)); //Liste des Managers neu setzen
+        changes.flush(); //Stack der Reversiblen Änderungen leeren
+        try {
+            VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptToFile(trainer.getManager()); //Änderungen aus Datei schreiben
+        } catch (IOException ex) {
+            Logger.getLogger(RemoveGUI.class.getName()).log(Level.SEVERE, null, ex); //Fehlermeldung
+        }
         if(tg){
             lbMsg.setForeground(Color.green);
-            lbMsg.setText(trainer.getManager().getChsaved());
+            lbMsg.setText(trainer.getManager().getChsaved()); //Änderungen gespeichert Nachricht
         }else{
             lbMsg.setForeground(Color.green);
-            lbMsg.setText("Änderungen gespeichert");
+            lbMsg.setText("Änderungen gespeichert");//Änderungen gespeichert Nachricht
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnRevertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevertActionPerformed
-        if (changes.getSize() == 0) {
-            System.out.println("size 0");
+       /*
+        Änderungen rückgängig machen
+        */
+        if (changes.getSize() == 0) { //Keine Änderungen verfügbar
+            
             if(tg){
                 lbMsg.setForeground(Color.red);
-                lbMsg.setText(trainer.getManager().getNochangesrevertable());
+                lbMsg.setText(trainer.getManager().getNochangesrevertable()); //Meldung ausgeben
             }else{
                 lbMsg.setForeground(Color.red);
-                lbMsg.setText("Keine umkehrbaren Änderungen!");
+                lbMsg.setText("Keine umkehrbaren Änderungen!"); //Meldung ausgeben
             }
         } else {
 
-            Object[] r = (Object[]) changes.getHead().getContent();
+            /*
+            Änderungen rückgängig machen
+            */
+            
+            Object[] r = (Object[]) changes.getHead().getContent();  //Head des Stacks holen
 
-            System.out.print(((Vokabel) r[0]).getGerman());
+            
 
-            this.array = r;
+            this.array = r; //Array auf die alte Version zurücksetzen
 
-            System.out.print(((Vokabel) array[0]).getGerman());
+            
 
-            outputList(array);
-            changes.pop();
+            outputList(array); //Tabelle aktualisieren
+            changes.pop(); //Head des Stacks entfernen
 
-            if(tg){
+            if(tg){ //GUI in Fremdsprache
                 lbMsg.setForeground(Color.GREEN);
                         
-                lbMsg.setText(trainer.getManager().getReverted());
-            }else{
+                lbMsg.setText(trainer.getManager().getReverted());//Meldung ausgeben
+            }else{ //GUI auf Deutsch
                 lbMsg.setForeground(Color.GREEN);
                         
-                lbMsg.setText("Änderung rückgängig gemacht");
+                lbMsg.setText("Änderung rückgängig gemacht"); //Meldung ausgeben
             }
             
         }
     }//GEN-LAST:event_btnRevertActionPerformed
 
-    public void outputList(Object[] ar) {
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-        dtm.setRowCount(ar.length);
+    //Liste(als Array) in Tabelle ausgeben
+    public void outputList(Object[] ar) { //Object[] als Übergabeparameter
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel(); //TableModel um Tabelle zu verändern
+        dtm.setRowCount(ar.length);//Anzahl der Reihen verändern
 
-        jTable1.setRowHeight((jScrollPane1.getHeight() - 5) / 12);
+        jTable1.setRowHeight((jScrollPane1.getHeight() - 5) / 12); //Größe der Reihen verändern damit es besser aussieht
 
-        jTable1.setModel(dtm);
+        jTable1.setModel(dtm); //Model setzen
 
-        for (int j = 0; j < ar.length; j++) {
+        for (int j = 0; j < ar.length; j++) { //Befüllt die Reihen mit dem Inhalt aus den Objekten
             if (ar[j] instanceof Vokabel) {
                 Vokabel v = (Vokabel) ar[j];
-                jTable1.setValueAt(j + 1, j, 0);
-                jTable1.setValueAt(v.getGerman(), j, 1);
-                jTable1.setValueAt(v.getForeign(), j, 2);
-                String k = "" + v.getDifficulty() + " " + Miscellaneous.getStars(v.getDifficulty());
+                jTable1.setValueAt(j + 1, j, 0);  //Die Nmr: #
+                jTable1.setValueAt(v.getGerman(), j, 1); //Deutsches Wort
+                jTable1.setValueAt(v.getForeign(), j, 2); //Fremdsprachenwort
+                String k = "" + v.getDifficulty() + " " + Miscellaneous.getStars(v.getDifficulty()); //Schwierigkeit + Sterne
                 jTable1.setValueAt(k, j, 3);
 
             }
@@ -354,26 +391,34 @@ public class SortGUI extends javax.swing.JFrame {
 
     }
 
+    //Auswahl-Comboboxen aktualisieren
     public void updateSwapComboBoxes() {
-        combo1.removeAllItems();
-        combo2.removeAllItems();
+        combo1.removeAllItems();  //Leeren
+        combo2.removeAllItems(); //Leeren
 
-        for (int run = 0; run < trainer.getManager().getList().getSize(); run++) {
+        for (int run = 0; run < trainer.getManager().getList().getSize(); run++) {//Für jedes Objekt in der Liste die passenden Nmr: # hinzufügen
             combo1.addItem(run + 1);
             combo2.addItem(run + 1);
         }
 
     }
 
+    //Texte entweder in Fremdsprache oder in Deutsch setzen
     public void setLanguage(boolean f) {
-        if (f) {
+        if (f) { //Fremdsprache
             Manager mng = trainer.getManager();
+             /*
+            Unterschiedliche Texte aus Manager holen und als Text der Komponenten setzen
+            */
             lbCaption.setText(mng.getSortGUICaption());
             btnSwap.setText(mng.getSwapText());
             btnSort.setText(mng.getSortString());
             btnSave.setText(mng.getSavech());
             btnRevert.setText(mng.getRevertch());
-        } else {
+        } else { //Deutsch
+             /*
+            Text der unterschiedlichen Komponenten setzen
+            */
             lbCaption.setText("Vokabeln sortieren");
             btnSwap.setText("Positionen tauschen");
             btnSort.setText("Sortieren");
@@ -383,26 +428,27 @@ public class SortGUI extends javax.swing.JFrame {
         }
     }
 
-    private String getTableHeader(String l) {
+    //Gibt die passenden Namen für die Tabellenspalten zurück
+    private String getTableHeader(String l) { //l - Spalte, für die der Name gesucht Wird
         if (l.equalsIgnoreCase("german")) {
             if (tg) {
-                return trainer.getManager().getTableGermanRow();
+                return trainer.getManager().getTableGermanRow();  //Spaltenname in Fremdsprache
             }
-            return "Deutsch";
+            return "Deutsch";  //Spaltenname in Deutsch
         }
         if (l.equalsIgnoreCase("foreign")) {
             if (tg) {
-                return trainer.getManager().getLanguageName();
+                return trainer.getManager().getLanguageName();  //Spaltenname in Fremdsprache
             }
-            return trainer.getManager().getGermanLanguageName();
+            return trainer.getManager().getGermanLanguageName();  //Spaltenname in Deutsch
         }
         if (l.equalsIgnoreCase("dif")) {
             if (tg) {
-                return trainer.getManager().getDifficulty();
+                return trainer.getManager().getDifficulty(); //Spaltenname in Fremdsprache
             }
-            return "Schwierigkeit";
+            return "Schwierigkeit";  //Spaltenname in Deutsch
         }
-        return "";
+        return "";  //Fehler - leere Rückgabe
     }
 
 

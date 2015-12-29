@@ -1,30 +1,30 @@
 package alexsheehan.vocabtrainer.datast;
 
-public class StackKnoten {
+public class StackKnoten { //Eigentlich genau wie der normale Knoten, hat nur kein Objekt als Inhalt sondern ein Objekt[] 
 
     private Object[] content; //Inhalt, auf den der Knoten verweist
     private StackKnoten next;    //Der darauffolgende Knoten  
     
     
     //Konstruktor
-    public StackKnoten(Object[] x){ //x - content
-        content = x;
+    public StackKnoten(Object[] x){ 
+        content = x; //Inhalt = x
     }
 
-    //Content & Next Get-/Setter Methoden
-    public Object[] getContent() {
+    
+    public Object[] getContent() { //Inhalt zurückgeben
         return content;
     }
 
-    public void setContent(Object[] content) { //content - Inhalt, auf den der Knoten verweisen soll
+    public void setContent(Object[] content) { //Inhalt verändern
         this.content = content;
     }
 
-    public StackKnoten getNext() {
+    public StackKnoten getNext() { //Nächsten Knoten  zurückgeben
         return next;
     }
 
-    public void setNext(StackKnoten n) { //n - Knoten, der auf diesen Folgen soll
+    public void setNext(StackKnoten n) { //Nächsten Knoten setzen
         this.next = n;
     }
 

@@ -17,20 +17,20 @@ import javax.swing.border.LineBorder;
 
 public class VocabTrainer extends javax.swing.JFrame {
 
-    private Manager manager;
-    public boolean activeTraining;
-    protected Training training;
+    private Manager manager; //Der Manager für die Vokabelliste & Sprache undso..
+    public boolean activeTraining; //Aktives Training?
+    protected Training training; //Training Instanz
 
-    public VocabTrainer(Manager m) {
-        manager = m;
-        initComponents();
+    public VocabTrainer(Manager m) { //Konstruktor
+        manager = m; 
+        initComponents(); //GUI wird erstellt
 
-        changeGUILanguage(false);
-        toggleAccessability(false);
+        changeGUILanguage(false); //GUI-Sprache erstmal auf Deutsch
+        toggleAccessability(false); //Alle Training-Buttons/Felder auf inaktiv setzen
 
-        btnNewTraining.setEnabled(manager.getList().getSize() >= 1);
-        btnSort.setEnabled(manager.getList().getSize() >= 1);
-        btnRemvoc.setEnabled(manager.getList().getSize() >= 1);
+        btnNewTraining.setEnabled(manager.getList().getSize() >= 1); //Trainingsbutton enablen wenn Größe der Liste >= 1
+        btnSort.setEnabled(manager.getList().getSize() >= 1);  //Sortieren enablen wenn Größe der Liste >= 1
+        btnRemvoc.setEnabled(manager.getList().getSize() >= 1);  //Löschen enablen wenn Größe der Liste >= 1
     }
 
     @SuppressWarnings("unchecked")
@@ -85,6 +85,11 @@ public class VocabTrainer extends javax.swing.JFrame {
         btnRemvoc.setBackground(new java.awt.Color(153, 0, 0));
         btnRemvoc.setForeground(new java.awt.Color(255, 255, 255));
         btnRemvoc.setText("Remove Word");
+        btnRemvoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemvocActionPerformed(evt);
+            }
+        });
 
         lbAmountText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbAmountText.setText("Amount of Words:");
@@ -303,39 +308,39 @@ public class VocabTrainer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddvocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddvocActionPerformed
-
-        if (activeTraining) {
-            if (tgbtnGuiLang.isSelected()) {
-                if (btnAddvoc.getText().equalsIgnoreCase(manager.getEndTraining())) {
-                    training.initEnd();
-                    this.setEnabled(false);
-                    new AddGUI(this).setVisible(true);
+        
+        if (activeTraining) { //Wenn gerade ein training läuft muss das Training beendet werden bevor die AddGUI geöffnet wird
+            if (tgbtnGuiLang.isSelected()) { //Wenn Fremdsprache aktiviert
+                if (btnAddvoc.getText().equalsIgnoreCase(manager.getEndTraining())) {//Benutzer bestätitigt
+                    training.initEnd(); //Ende des Trainings
+                    this.setEnabled(false); //GUI deaktivieren
+                    new AddGUI(this).setVisible(true); //neues AddGUI
 
                     btnAddvoc.setText(manager.getAddButtonText());
 
-                } else {
+                } else {//BestätigungsText zum beenden des Trainings
                     btnAddvoc.setText(manager.getEndTraining());
                 }
 
-            } else {
-                if (btnAddvoc.getText().equalsIgnoreCase("Training beenden?")) {
-                    training.initEnd();
-                    this.setEnabled(false);
-                    new AddGUI(this).setVisible(true);
+            } else { //Wenn Deutsch aktiv ist
+                if (btnAddvoc.getText().equalsIgnoreCase("Training beenden?")) {//Benutzer bestätitigt
+                    training.initEnd(); //Ende des Trainings
+                    this.setEnabled(false); //GUI deaktivieren
+                    new AddGUI(this).setVisible(true); //neues AddGUI
 
                     btnAddvoc.setText("Wort hinzufügen");
 
-                } else {
+                } else { //BestätigungsText zum beenden des Trainings
                     btnAddvoc.setText("Training beenden?");
                 }
 
             }
 
-        } else {
+        } else { //Sonst
 
-            this.setEnabled(false);
-            new AddGUI(this).setVisible(true);
-            if (tgbtnGuiLang.isSelected()) {
+            this.setEnabled(false); //Diese GUI deaktivieren
+            new AddGUI(this).setVisible(true); //Neue AddGUI
+            if (tgbtnGuiLang.isSelected()) { //Add Button Text wieder auf normal setzen
                 btnAddvoc.setText(manager.getAddButtonText());
             } else {
                 btnAddvoc.setText("Wort hinzufügen");
@@ -344,28 +349,31 @@ public class VocabTrainer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddvocActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        new WelcomeScreen().setVisible(true);
-        this.dispose();
+        //Zurück Button geklickt
+        new WelcomeScreen().setVisible(true);  //neuer Start-Screen
+        this.dispose(); //GUI Schließen
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void tgbtnGuiLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgbtnGuiLangActionPerformed
-        if (tgbtnGuiLang.isSelected()) {
-            tgbtnGuiLang.setText("GUI: " + manager.getLanguageName());
-            changeGUILanguage(true);
-        } else {
-            tgbtnGuiLang.setText("GUI: Deutsch");
-            changeGUILanguage(false);
+        //Fremdsprachen-TGBTN angeklickt
+        if (tgbtnGuiLang.isSelected()) { //Fremdsprache
+            tgbtnGuiLang.setText("GUI: " + manager.getLanguageName()); //Buttontext umstellen
+            changeGUILanguage(true); //GUI Sprache umstellen
+        } else { //Deutsch
+            tgbtnGuiLang.setText("GUI: Deutsch");//Buttontext umstellen
+            changeGUILanguage(false); //GUI Sprache umstellen
         }
     }//GEN-LAST:event_tgbtnGuiLangActionPerformed
 
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
-
+        //Wenn gerade ein training läuft muss das Training beendet werden bevor die SortGUI geöffnet wird
+        //Ausführliche Kommentare: Siehe btnAddvocActionPerformed 
         if (activeTraining) {
             if (tgbtnGuiLang.isSelected()) {
                 if (btnSort.getText().equalsIgnoreCase(manager.getEndTraining())) {
                     training.initEnd();
                     this.setEnabled(false);
-                    new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);
+                    new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true); //Neues SortGUI, Übergabe: Diese Instanz & Ausgewählte Sprache
 
                     btnSort.setText(manager.getSortButtonText());
 
@@ -377,7 +385,7 @@ public class VocabTrainer extends javax.swing.JFrame {
                 if (btnSort.getText().equalsIgnoreCase("Training beenden?")) {
                     training.initEnd();
                     this.setEnabled(false);
-                    new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);
+                    new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true); //Neues SortGUI, Übergabe: Diese Instanz & Ausgewählte Sprache
 
                     btnSort.setText("Vokabeln Sortieren");
 
@@ -389,7 +397,7 @@ public class VocabTrainer extends javax.swing.JFrame {
         } else {
 
             this.setEnabled(false);
-            new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);
+            new SortGUI(this, tgbtnGuiLang.isSelected()).setVisible(true); //Neues SortGUI, Übergabe: Diese Instanz & Ausgewählte Sprache
             if (tgbtnGuiLang.isSelected()) {
                 btnSort.setText(manager.getSortButtonText());
             } else {
@@ -399,11 +407,11 @@ public class VocabTrainer extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSortActionPerformed
 
     private void btnNewTrainingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTrainingActionPerformed
-
-        activeTraining = true;
-        training = new Training(this);
-        training.start();
-        barCorrectPer.setValue(0);
+        //Neues-Training-Button geklickt
+        activeTraining = true; //Aktives Training
+        training = new Training(this); //Neues Training-Objekt
+        training.start(); //Training gestartet
+        barCorrectPer.setValue(0); //Progress-Bars
     }//GEN-LAST:event_btnNewTrainingActionPerformed
 
     private void tgbLangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tgbLangActionPerformed
@@ -411,15 +419,18 @@ public class VocabTrainer extends javax.swing.JFrame {
     }//GEN-LAST:event_tgbLangActionPerformed
 
     private void tgbLangStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tgbLangStateChanged
-        if (tgbLang.isSelected()) {
+        //Wert des Buttons, der die gezeigte Sprache des Trainings ändert
+        if (tgbLang.isSelected()) {  //Fremdsprache gezeigt
 
+             //Togglebutton-Text geändert
             if (tgbtnGuiLang.isSelected()) {
                 tgbLang.setText(manager.getShown());
             } else {
                 tgbLang.setText("Gezeigt: " + manager.getGermanLanguageName());
             }
-        } else {
-
+        } else { //Deutsches Wort gezeigt
+            
+            //Togglebutton-Text geändert
             if (tgbtnGuiLang.isSelected()) {
                 tgbLang.setText(manager.getGerShown());
             } else {
@@ -430,16 +441,60 @@ public class VocabTrainer extends javax.swing.JFrame {
     }//GEN-LAST:event_tgbLangStateChanged
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        //Wort wird übersprungen, Button ist nur aktiviert wenn Training läuft also kein Grund für irgendwelche Fehlerabfragen
         training.next();
     }//GEN-LAST:event_btnNextActionPerformed
 
     private void btnCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckActionPerformed
+        //Wort wird verifiziert, Button ist nur aktiviert wenn Training läuft also kein Grund für irgendwelche Fehlerabfragen
         training.verify();
     }//GEN-LAST:event_btnCheckActionPerformed
 
+    private void btnRemvocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemvocActionPerformed
+        //Wenn gerade ein training läuft muss das Training beendet werden bevor die RemoveGUI geöffnet wird
+        //Ausführliche Kommentare: Siehe btnAddvocActionPerformed 
+        if (activeTraining) {
+            if (tgbtnGuiLang.isSelected()) {
+                if (btnRemvoc.getText().equalsIgnoreCase(manager.getEndTraining())) {
+                    training.initEnd();
+                    this.setEnabled(false);
+                    new RemoveGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);//Neues RemoveGUI, Übergabe: Diese Instanz & Ausgewählte Sprache
+
+                    btnRemvoc.setText(manager.getRemoveButtonText());
+
+                } else {
+                    btnRemvoc.setText(manager.getEndTraining());
+                }
+
+            } else {
+                if (btnRemvoc.getText().equalsIgnoreCase("Training beenden?")) {
+                    training.initEnd();
+                    this.setEnabled(false);
+                    new RemoveGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);//Neues RemoveGUI, Übergabe: Diese Instanz & Ausgewählte Sprache
+
+                    btnRemvoc.setText("Wort entfernen");
+
+                } else {
+                    btnRemvoc.setText("Training beenden?");
+                }
+            }
+
+        } else {
+
+            this.setEnabled(false);
+            new RemoveGUI(this, tgbtnGuiLang.isSelected()).setVisible(true);//Neues RemoveGUI, Übergabe: Diese Instanz & Ausgewählte Sprache
+            if (tgbtnGuiLang.isSelected()) {
+                btnRemvoc.setText(manager.getRemoveButtonText());
+            } else {
+                btnRemvoc.setText("Wort entfernen");
+            }
+        }
+    }//GEN-LAST:event_btnRemvocActionPerformed
+
     public void changeGUILanguage(boolean f) { //f = foreign: yes= english/french.. no=german
 
-        if (f) {
+        if (f) { //Fremdsprache aktiviert
+            //Texte von allen TF, Labels & Buttons geändert
             lbHeader.setText(manager.getGuiTitle());
             btnAddvoc.setText(manager.getAddButtonText());
             btnRemvoc.setText(manager.getRemoveButtonText());
@@ -463,6 +518,7 @@ public class VocabTrainer extends javax.swing.JFrame {
 
             }
 
+            //Output Texte geändert
             switch (getOutputOption()) {
                 case 0:
                     lbOutput.setText(manager.getTrainingStarted());
@@ -482,7 +538,8 @@ public class VocabTrainer extends javax.swing.JFrame {
                     break;
             }
 
-        } else {
+        } else { //Deutsch
+            //Texte von allen TF, Labels & Buttons geändert
             lbHeader.setText("Vokabeltrainer: " + manager.getGermanLanguageName());
             btnAddvoc.setText("Wort hinzufügen");
             btnRemvoc.setText("Wort entfernen");
@@ -504,6 +561,7 @@ public class VocabTrainer extends javax.swing.JFrame {
                 tgbLang.setText("Gezeigt: Deutsch");
             }
 
+            //Output Texte geändert
             switch (getOutputOption()) {
                 case 0:
                     lbOutput.setText("Neues Training begonnen");
@@ -526,36 +584,39 @@ public class VocabTrainer extends javax.swing.JFrame {
         }
     }
 
+    //Gibt Manager zurück
     public Manager getManager() {
         return manager;
     }
 
+    //Wörter Anzahl aktualisiert
     public void updateWordCount() {
-        lbAmount.setText("" + manager.getList().getSize());
+        lbAmount.setText("" + manager.getList().getSize()); //Label-Text aktualisieren
 
-        if (manager.getList().getSize() == 0) {
+        if (manager.getList().getSize() == 0) { //Wenn Wörter in der Liste sind werden Trainings-/GUI Buttons aktiviert
             btnNewTraining.setEnabled(false);
-            btnSort.setEnabled(false);
-            btnRemvoc.setEnabled(false);
-        } else if (manager.getList().getSize() >= 1) {
+            btnSort.setEnabled(false); //Sort Button kann nur gedrückt werden wenn Wörter in der Liste sind
+            btnRemvoc.setEnabled(false); //Remove Button kann nur gedrückt werden wenn Wörter in der Liste sind
+        } else if (manager.getList().getSize() >= 1) { //Wenn Wörter in der Liste sind werden Trainings-/GUI Buttons aktiviert
             btnNewTraining.setEnabled(true);
             btnSort.setEnabled(true);
             btnRemvoc.setEnabled(true);
         }
     }
 
+    //Vokabel hinzufügen
     public void addVokabel(Vokabel q) {
-        manager.addVokabel(q);
+        manager.addVokabel(q); //Vokabel wird der Liste über den Manager hinzugefügt
         try {
-            VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptToFile(manager);
+            VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptToFile(manager); //Liste in Datei gespeichert
         } catch (IOException ex) {
-            Logger.getLogger(VocabTrainer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VocabTrainer.class.getName()).log(Level.SEVERE, null, ex); //Fehlermeldung
         }
-        updateWordCount();
+        updateWordCount(); //Wörteranzahl aktualisiert
 
     }
 
-    public void toggleAccessability(boolean n) {
+    public void toggleAccessability(boolean n) { //Alle Buttons für das Training werden entweder aktiviert oder deaktiviert
         lbForTF.setEnabled(n);
         lbForTFGer.setEnabled(n);
         tfGerman.setEditable(n);
@@ -569,67 +630,77 @@ public class VocabTrainer extends javax.swing.JFrame {
         lbTrainingInfoValue2.setEnabled(n);
     }
 
-    public void updateTrainingInfos() {
-        lbTrainingInfoValue1.setText(training.getCurrent() + " / " + manager.getList().getSize());
-        lbTrainingInfoValue2.setText(training.getCorrect() + " / " + training.getCurrent());
-        progBar.setMaximum(manager.getList().getSize());
-        progBar.setValue(training.getCurrent());
+    public void updateTrainingInfos() { //Training-Informationen (Wörter / Korrekte Wörter..) aktualisieren
+        lbTrainingInfoValue1.setText(training.getCurrent() + " / " + manager.getList().getSize()); //Fortschritt in der Liste (x/maxwörter)
+        lbTrainingInfoValue2.setText(training.getCorrect() + " / " + training.getCurrent()); //Korrekte Wörter (korrekt/x)
+        progBar.setMaximum(manager.getList().getSize()); //Progressbar anpassen (max = listengröße)
+        progBar.setValue(training.getCurrent()); //Progressbar value (value = current)
 
-        int x = training.getCurrent();
-        int y = training.getCorrect();
+        int x = training.getCurrent(); //Fortschritt
+        int y = training.getCorrect(); //Richtige Wörter
 
         if (x != 0) {
 
-            float z = (float) y / x * 100;
+            float z = (float) y / x * 100; //Prozentberechnung
 
             System.out.println("" + z);
 
-            barCorrectPer.setForeground(Color.red);
+            barCorrectPer.setForeground(Color.red); //Standartmäßig rote Farbe (Schlechte Leistung)
 
             if (z >= 50) {
-                barCorrectPer.setForeground(Color.yellow);
+                barCorrectPer.setForeground(Color.yellow); //Wenn >= 50, gelbe Farbe (mittlere Leistung)
             }
 
             if (z >= 75) {
-                barCorrectPer.setForeground(Color.green);
+                barCorrectPer.setForeground(Color.green); //Wenn >= 75, grüne Farbe (gute Leistung)
             }
 
-            barCorrectPer.setMaximum(training.getCurrent());
+            barCorrectPer.setMaximum(training.getCurrent()); //(max = current)
 
-            barCorrectPer.setValue(training.getCorrect());
+            barCorrectPer.setValue(training.getCorrect()); //(value = correct)
 
         }
 
     }
 
+    //Passendes Label zu der Zahl rausfinden
     public JLabel getInfoValue(int x) {
         if (x == 1) {
-            return lbTrainingInfoValue1;
+            return lbTrainingInfoValue1; //return Label 1
         } else if (x == 2) {
-            return lbTrainingInfoValue2;
+            return lbTrainingInfoValue2; //return Label 2
         } else {
-            return null;
+            return null; //Null...
         }
 
     }
 
-    public JToggleButton getToggleShown() {
+    public JToggleButton getToggleShown() { //Togglebutton für gezeigte Sprache
         return tgbLang;
     }
 
-    public JTextField getGermanField() {
+    public JTextField getGermanField() { //Feld für deutsche Wörter
         return tfGerman;
     }
 
-    public JTextField getForeignField() {
+    public JTextField getForeignField() {//Feld für Fremdsprachenwörter
         return tfForeign;
     }
 
+    /*
+    Output Nachrichten für Trainings:
+    4 Möglichkeiten:
+     > 0: neues Training begonnen
+     > 1: Richtiges Wort
+     > 2: Falsches Wort
+     > 3: Training beenden
+    */
     public void setOutputText(int opt) {
         switch (opt) {
             case 0:
-                lbOutput.setForeground(Color.MAGENTA);
-
+                lbOutput.setForeground(Color.MAGENTA); //Farben
+                
+                //Passenden String (ggf. aus Manager) ausgeben
                 if (tgbtnGuiLang.isSelected()) {
                     lbOutput.setText(manager.getTrainingStarted());
                 } else {
@@ -638,7 +709,8 @@ public class VocabTrainer extends javax.swing.JFrame {
                 break;
 
             case 1:
-                lbOutput.setForeground(Color.green);
+                lbOutput.setForeground(Color.green); //Farben
+                //Passenden String (ggf. aus Manager) ausgeben
                 if (tgbtnGuiLang.isSelected()) {
                     lbOutput.setText(manager.getCorrectWord());
                 } else {
@@ -646,7 +718,8 @@ public class VocabTrainer extends javax.swing.JFrame {
                 }
                 break;
             case 2:
-                lbOutput.setForeground(Color.red);
+                lbOutput.setForeground(Color.red); //Farben
+                //Passenden String (ggf. aus Manager) ausgeben
                 if (tgbtnGuiLang.isSelected()) {
                     lbOutput.setText(manager.getWrongWord());
                 } else {
@@ -654,7 +727,8 @@ public class VocabTrainer extends javax.swing.JFrame {
                 }
                 break;
             case 3:
-                lbOutput.setForeground(Color.MAGENTA);
+                lbOutput.setForeground(Color.MAGENTA); //Farben
+                //Passenden String (ggf. aus Manager) ausgeben
                 if (tgbtnGuiLang.isSelected()) {
                     lbOutput.setText(manager.getFinished());
                 } else {
@@ -666,9 +740,13 @@ public class VocabTrainer extends javax.swing.JFrame {
         }
     }
 
-    public int getOutputOption() {
+    public int getOutputOption() { 
         String y = lbOutput.getText();
 
+        /*
+        Sucht durch den Text des Labels die passende Nummer der Ausgabe raus
+        */
+        
         if (y.equalsIgnoreCase(manager.getTrainingStarted()) || y.equalsIgnoreCase("Neues Training begonnen")) {
             return 0;
         }
@@ -681,10 +759,10 @@ public class VocabTrainer extends javax.swing.JFrame {
             return 2;
         }
 
-        if (y.equalsIgnoreCase(manager.getFinished()) || y.equalsIgnoreCase("Training beendet!")) {
+        if (y.equalsIgnoreCase(manager.getFinished()) || y.equalsIgnoreCase("Training beendet!")) { 
             return 3;
         }
-        return -1;
+        return -1; //Fehler
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
