@@ -30,7 +30,7 @@ public class RemoveGUI extends javax.swing.JFrame {
     private VocabTrainer trainer; //Der Vokabel Trainer
     private boolean tg; //True: RemoveGUI in Fremdsprache, false: RemoveGUI auf Deutsch
     private Object[] array; //Object[] zum entfernen & in Liste anzeigen
-    private Stack changes; //Stack um Änges; //Stack underungen rückgängig machen zu können
+    private Stack changes; //Stack um Änderungen rückgängig machen zu können
 
     public RemoveGUI(VocabTrainer x, boolean tg) { //Konstruktor- VocabTrainer & Sprach-Boolean als Übergabeparameter
         this.tg = tg; 
