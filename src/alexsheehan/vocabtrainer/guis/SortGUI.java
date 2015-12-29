@@ -32,6 +32,7 @@ public class SortGUI extends javax.swing.JFrame {
         this.tg = tg;
         trainer = x;
         initComponents();//Netbeans initialisiert GUI Komponenten
+        this.setLocationRelativeTo(null);
         changes = new Stack(); //Neuer Stack 
         array = trainer.getManager().getList().toArray(); //Array wird aus der linearen Liste erstellt
         outputList(array); //Liste in Tabelle ausgegeben    

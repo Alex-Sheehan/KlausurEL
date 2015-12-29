@@ -13,7 +13,7 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
    //Konstruktor
     public WelcomeScreen() {
         initComponents(); 
-        
+        this.setLocationRelativeTo(null);
         
         
     }

@@ -16,6 +16,7 @@ public class AddGUI extends javax.swing.JFrame {
 
     public AddGUI(VocabTrainer t) { //Kontruktor - Vokabeltrainer als Übergabeparameter
         initComponents(); //Netbeans initialisiert alle GUI Elemente
+        this.setLocationRelativeTo(null);
         trainer = t; 
         lbForeign.setText(trainer.getManager().getTfLabelInGerman() + " Wort:"); //Nimmt passendes Wort für TF Label aus Manager (entw. "Englisches" oder "Französisches")
         lbVal.setText("" + jSlider1.getValue()); //Slider Wert setzen

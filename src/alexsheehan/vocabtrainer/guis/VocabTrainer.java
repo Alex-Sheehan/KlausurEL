@@ -24,7 +24,7 @@ public class VocabTrainer extends javax.swing.JFrame {
     public VocabTrainer(Manager m) { //Konstruktor
         manager = m; 
         initComponents(); //GUI wird erstellt
-
+        this.setLocationRelativeTo(null);
         changeGUILanguage(false); //GUI-Sprache erstmal auf Deutsch
         toggleAccessability(false); //Alle Training-Buttons/Felder auf inaktiv setzen
 
