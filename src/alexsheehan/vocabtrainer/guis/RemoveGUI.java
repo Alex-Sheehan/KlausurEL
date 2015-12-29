@@ -5,7 +5,6 @@ import alexsheehan.vocabtrainer.Manager;
 import alexsheehan.vocabtrainer.Miscellaneous;
 import alexsheehan.vocabtrainer.VocabularyTrainerProgram;
 import alexsheehan.vocabtrainer.Vokabel;
-import alexsheehan.vocabtrainer.datast.Knoten;
 import alexsheehan.vocabtrainer.datast.Stack;
 import alexsheehan.vocabtrainer.datast.StackKnoten;
 import java.awt.Color;
@@ -17,14 +16,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
- /*
-    @AlexSheehan Klausurersatzleistung
-    => Die Klasse RemoveGUI
-    - GUI zum entfernen von Vokabeln
-    - Stellt Liste in Tabelle da
-    - Comboboxen & Buttons zum Löschen, Rückgängigmachen & speichern
-    */
+/*
+ @AlexSheehan Klausurersatzleistung
+ => Die Klasse RemoveGUI
+ - GUI zum entfernen von Vokabeln
+ - Stellt Liste in Tabelle da
+ - Comboboxen & Buttons zum Löschen, Rückgängigmachen & speichern
+ */
 
+/*
+ Der Stack wurde für das Rückgängigmachen in der Lösch-/Sortierklasse benutzt,
+ da neue Elemente immer nur oben eingefügt und entfernt werden und der Stack
+ gut für dies geeignet ist
+ */
 public class RemoveGUI extends javax.swing.JFrame {
 
     private VocabTrainer trainer; //Der Vokabel Trainer
@@ -33,7 +37,7 @@ public class RemoveGUI extends javax.swing.JFrame {
     private Stack changes; //Stack um Änderungen rückgängig machen zu können
 
     public RemoveGUI(VocabTrainer x, boolean tg) { //Konstruktor- VocabTrainer & Sprach-Boolean als Übergabeparameter
-        this.tg = tg; 
+        this.tg = tg;
         trainer = x;
         initComponents(); //Netbeans initialisiert GUI Komponenten
         this.setLocationRelativeTo(null);
@@ -201,9 +205,8 @@ public class RemoveGUI extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
 
         /*
-        Lösch-Button geklickt
-        */
-        
+         Lösch-Button geklickt
+         */
         if (combo1.getSelectedItem() == null || combo1.getSelectedItem().toString() == null || combo1.getSelectedItem().toString().isEmpty()) { //Keine Auswahlmöglichkeiten / Falsche Auswahlmöglichkeiten
             lbMsg.setForeground(Color.red);
             lbMsg.setText("Error!"); //Fehlermeldung ausgeben
@@ -246,7 +249,7 @@ public class RemoveGUI extends javax.swing.JFrame {
 
     private void btnRevertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevertActionPerformed
         if (changes.getSize() == 0) { //Keine reversiblen Änderungen
-            
+
             if (tg) { //GUI in Fremdsprache
                 lbMsg.setForeground(Color.red);
                 lbMsg.setText(trainer.getManager().getNochangesrevertable()); //Fehlermeldung
@@ -259,7 +262,7 @@ public class RemoveGUI extends javax.swing.JFrame {
             Object[] r = (Object[]) changes.getHead().getContent(); //Head des Stacks 
 
             this.array = r; //Array = Head des Stacks
- 
+
             updateComboBoxes(); //Comboboxen aktualisieren
             outputList(array); //Tabelle aktualisieren
             changes.pop();
@@ -282,14 +285,13 @@ public class RemoveGUI extends javax.swing.JFrame {
         trainer.getManager().setList(Liste.fromArray(array)); //lineare Liste des Managers aktualisieren
         changes.flush(); //Stack leeren
         trainer.updateWordCount(); //Wörteranzahl des VocabTrainer aktualisieren
-        
+
         try {
             VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptToFile(trainer.getManager()); //Textdatei aktualisieren
         } catch (IOException ex) {
             Logger.getLogger(RemoveGUI.class.getName()).log(Level.SEVERE, null, ex); //Fehlermeldung
         }
-        
-        
+
         if (tg) {//GUI in Fremdsprache
             lbMsg.setForeground(Color.green);
             lbMsg.setText(trainer.getManager().getChsaved()); //Erfolgsmeldung
@@ -338,8 +340,8 @@ public class RemoveGUI extends javax.swing.JFrame {
         if (f) { //Fremdsprache
             Manager mng = trainer.getManager();
             /*
-            Unterschiedliche Texte aus Manager holen und als Text der Komponenten setzen
-            */
+             Unterschiedliche Texte aus Manager holen und als Text der Komponenten setzen
+             */
             lbCaption.setText(mng.getRemGUICaption());
             btnDelete.setText(mng.getDeletebtn());
 
@@ -347,8 +349,8 @@ public class RemoveGUI extends javax.swing.JFrame {
             btnRevert.setText(mng.getRevertch());
         } else { //Deutsch
             /*
-            Text der unterschiedlichen Komponenten setzen
-            */
+             Text der unterschiedlichen Komponenten setzen
+             */
             lbCaption.setText("Vokabeln löschen");
             btnDelete.setText("Löschen");
             btnRevert.setText("Änderung rückgängig machen");

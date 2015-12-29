@@ -1,12 +1,5 @@
 package alexsheehan.vocabtrainer;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -19,7 +12,7 @@ public class Miscellaneous {
      - Funktionen werden von mehreren Klassen benutzt
      */
     /*
-     => getStarts(int)
+     => getStars(int)
      - Gibt String mit x Sternen zurück
      - z.B benutzt in AddGUI bei dem Slider mit der Schwierigkeit
      */
@@ -48,11 +41,10 @@ public class Miscellaneous {
 
     /* 
      - FISCHER-YATES SHUFFLE
-     @ Methode nicht selber implementiert - Quelle: http://stackoverflow.com/questions/1519736/random-shuffling-of-an-array (Methode leicht verändert)
+     @ Methode teilweise kopiert - Quelle: http://stackoverflow.com/questions/1519736/random-shuffling-of-an-array (Methode teilweise verändert)
      - Sortiert das Object[] zufällig
      */
     public static void shuffleArray(Object[] ar) {
-
         Random rnd = ThreadLocalRandom.current();
         for (int i = ar.length - 1; i > 0; i--) {
             int index = rnd.nextInt(i + 1);

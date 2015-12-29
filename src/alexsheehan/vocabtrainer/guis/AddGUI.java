@@ -3,21 +3,19 @@ package alexsheehan.vocabtrainer.guis;
 import alexsheehan.vocabtrainer.Miscellaneous;
 import alexsheehan.vocabtrainer.Vokabel;
 
-
 public class AddGUI extends javax.swing.JFrame {
-    
-    /*
-    @AlexSheehan Klausurersatzleistung
-    => Die Klasse AddGUI
-    - GUI zum hinzufügen von Vokabeln
-    */
 
+    /*
+     @AlexSheehan Klausurersatzleistung
+     => Die Klasse AddGUI
+     - GUI zum hinzufügen von Vokabeln
+     */
     VocabTrainer trainer; //Der Vokabeltrainer
 
     public AddGUI(VocabTrainer t) { //Kontruktor - Vokabeltrainer als Übergabeparameter
         initComponents(); //Netbeans initialisiert alle GUI Elemente
         this.setLocationRelativeTo(null);
-        trainer = t; 
+        trainer = t;
         lbForeign.setText(trainer.getManager().getTfLabelInGerman() + " Wort:"); //Nimmt passendes Wort für TF Label aus Manager (entw. "Englisches" oder "Französisches")
         lbVal.setText("" + jSlider1.getValue()); //Slider Wert setzen
         lbStars.setText(Miscellaneous.getStars(jSlider1.getValue())); //Sterne passend zum Slider-Wert setzen
@@ -170,7 +168,7 @@ public class AddGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-         trainer.setEnabled(true); //Trainer wieder aktivieren
+        trainer.setEnabled(true); //Trainer wieder aktivieren
     }//GEN-LAST:event_formWindowClosing
 
 

@@ -7,6 +7,12 @@ public class Liste { //Lineare Liste (1. Datenstruktur)
     private Knoten current; //Current Knoten
     private int size; //Größe der Liste
 
+    /*
+     Die lineare Liste wurde für die Speicherung der Vokabeln und für das
+     Training verwendet, da man, im Gegensatz zu Schlange & Stack, durch den
+     current Zeiger auf alle Objekte in der Liste zugreifen kann, und da das hinzufügen
+     aufgrund der Dynamik der Datenstruktur leicht ist
+     */
     public Liste() { //Konstrukor, Zeiger auf null / Größe auf 0
 
         first = null;
@@ -30,10 +36,10 @@ public class Liste { //Lineare Liste (1. Datenstruktur)
         }
 
     }
-    
-    public Object[] toArray(){ //Wandelt Liste in Array um (für sortieren etc)
+
+    public Object[] toArray() { //Wandelt Liste in Array um (für sortieren etc)
         Object[] ar = new Object[size]; //Neues Array, genauso groß wie Liste
-        for(int run = 0;run < size;run++){ //Für jedes Listenobjekt
+        for (int run = 0; run < size; run++) { //Für jedes Listenobjekt
             ar[run] = current.getContent(); //Listenobj in Array fügen
             next();
         }
@@ -42,14 +48,14 @@ public class Liste { //Lineare Liste (1. Datenstruktur)
 
     public void insert(Knoten kn) { //Knoten VOR current einsetzen
         if (current == first) { //Current = First
-            
+
             kn.setNext(first); //Next des neuen Knotens  = altes First
             first.setPrevious(kn); //Vorherigen Knoten des alten First = neuer Knoten
             first = kn; //First = neuer Knoten
             size++; //Größe +1
-            
-        }else{ //Current != First
-            
+
+        } else { //Current != First
+
             current.getPrevious().setNext(kn); //Next von Current's Vorherigen = Neuer Knoten
             kn.setPrevious(current.getPrevious()); //Vorheriger Knoten des neuen Knotens = Vorheriger von current
             current.setPrevious(kn); //Currents vorheriger = neuer Knoten
@@ -89,11 +95,11 @@ public class Liste { //Lineare Liste (1. Datenstruktur)
     }
 
     //Current um 1 nach vorner verschieve
-    public void next() { 
-        
-        if(current == last){ //Wenn Current = letzer Knoten
+    public void next() {
+
+        if (current == last) { //Wenn Current = letzer Knoten
             current = first; //Current auf ersten setzen
-        }else{ //Sonst
+        } else { //Sonst
             current = current.getNext(); //Current um 1 nach vorne verschiben
         }
     }
@@ -147,20 +153,19 @@ public class Liste { //Lineare Liste (1. Datenstruktur)
     }
 
     /*
-    fromArray(Object[]) : erstellt Liste aus Array
-    */
-    public static Liste fromArray(Object[] array){ //Gibt neu erstellte Liste zurück
-        
-        
+     fromArray(Object[]) : erstellt Liste aus Array
+     */
+    public static Liste fromArray(Object[] array) { //Gibt neu erstellte Liste zurück
+
         Liste l = new Liste(); //Neue Liste
-          
-        for(Object o : array){ //Für jedes Obj im Array
+
+        for (Object o : array) { //Für jedes Obj im Array
             Knoten k = new Knoten(o);
             l.append(k); //An Liste anfügen
         }
-        
+
         return l; //Liste zurückgeben
-        
+
     }
-    
+
 }

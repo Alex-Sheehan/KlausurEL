@@ -1,21 +1,18 @@
 package alexsheehan.vocabtrainer.guis;
 
-import alexsheehan.vocabtrainer.VocabularyTrainerProgram;
 import alexsheehan.vocabtrainer.EnglishManager;
 import alexsheehan.vocabtrainer.FrenchManager;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Programmes
 
-   //Konstruktor
+    //Konstruktor
     public WelcomeScreen() {
-        initComponents(); 
+        initComponents();
         this.setLocationRelativeTo(null);
-        
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -49,6 +46,11 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         btnFunktions.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
         btnFunktions.setForeground(new java.awt.Color(255, 255, 255));
         btnFunktions.setText("Welche Funktionen hat das Programm?");
+        btnFunktions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFunktionsActionPerformed(evt);
+            }
+        });
 
         btnUsage.setBackground(new java.awt.Color(0, 153, 153));
         btnUsage.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
@@ -156,7 +158,13 @@ public class WelcomeScreen extends javax.swing.JFrame { //GUI beim Start des Pro
         }
     }//GEN-LAST:event_btnUsageActionPerformed
 
-    
+    private void btnFunktionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFunktionsActionPerformed
+        try {
+            new Funktionen().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(WelcomeScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnFunktionsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

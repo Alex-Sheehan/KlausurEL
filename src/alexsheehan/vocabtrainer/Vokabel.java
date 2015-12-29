@@ -3,18 +3,16 @@ package alexsheehan.vocabtrainer;
 public class Vokabel {
 
     /*
-    @AlexSheehan Klausurersatzleistung
-    => Die Klasse Vocabel
-    - Speichert Deutsches Wort, Fremdsprachenwort, Schwierigkeit
-    - Wird später in Knoten gespeichert
-    */
-    
-    
+     @AlexSheehan Klausurersatzleistung
+     => Die Klasse Vocabel
+     - Speichert Deutsches Wort, Fremdsprachenwort, Schwierigkeit
+     - Wird später in Knoten gespeichert
+     */
     private String ger; //Deutsch
     private String foreign; //Fremdsprache
     private int difficult; //Schwierigkeit
-   
-    public Vokabel(String g,String f,int d){ //Konstruktor
+
+    public Vokabel(String g, String f, int d) { //Konstruktor
         ger = g; //Deutsch
         foreign = f; //Fremdsprache
         difficult = d; //Schwierigkeit
@@ -31,7 +29,5 @@ public class Vokabel {
     public int getDifficulty() { //Schwierigkeit zurückgeben
         return difficult;
     }
-    
-    
-    
+
 }

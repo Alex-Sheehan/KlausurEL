@@ -3,13 +3,12 @@ package alexsheehan.vocabtrainer;
 public class EnglishManager extends Manager {
 
     /*
-    @AlexSheehan Klausurersatzleistung
-    => Die Klasse EnglishManager
-    - Unterklasse von Manager, enthält Dateiname zur Speicherung von englischen Vokabeln
-    - Enthält alle Strings für englische GUI (durch Klick auf Button im englischen Vokabeltrainer einstellbar)
-    - EnglishManager bei Erstellung der VocabTrainer.java in WelcomeScreen.java initialisiert
-    */
-    
+     @AlexSheehan Klausurersatzleistung
+     => Die Klasse EnglishManager
+     - Unterklasse von Manager, enthält Dateiname zur Speicherung von englischen Vokabeln
+     - Enthält alle Strings für englische GUI (durch Klick auf Button im englischen Vokabeltrainer einstellbar)
+     - EnglishManager bei Erstellung der VocabTrainer.java in WelcomeScreen.java initialisiert
+     */
     public EnglishManager() {
         super(); //Konstruktor von Manager übernehmen
         this.fileName = "lang_english_list.txt"; //Dateiname der Textdatei zur Speicherung des Vokabeln
@@ -45,7 +44,7 @@ public class EnglishManager extends Manager {
         this.nochangesrevertable = "No revertable changes"; //Fehlermeldung: Keine reversibelen Änderungen (Sort GUI)
         this.reverted = "The last change has been reverted"; //Meldung: Änderung rückgängig gemacht (Sort GUI)
         this.chsaved = "Changes saved"; //Meldung: Änderungen gespeichert (Sort GUI)
-        
+
         //Remove GUI
         this.remGUICaption = "Remove Words"; //Überschrift des RemoveGUIS
         this.deletebtn = "Delete"; //Löschen Button (RemoveGUIS)
@@ -61,7 +60,7 @@ public class EnglishManager extends Manager {
         this.trainingstarted = "New Training started"; //Neues Training gestartet (VocabTrainer)
         this.correctword = "You entered the correct word!"; //Richtiges Wort eingegeben (VocabTrainer)
         this.wrongword = "This is not correct. Try again!"; //Falsches Wort eingegeben (VocabTrainer)
-        this.finished = "You finished your training! Score:"; //Training beendet (VocabTrainer)
+        this.finished = "You finished your training!"; //Training beendet (VocabTrainer)
 
         VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptFileToList(this); //Beim Aufrufen Dateien aus Textdatei laden 
 

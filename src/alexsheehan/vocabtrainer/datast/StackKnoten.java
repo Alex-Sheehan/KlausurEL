@@ -4,14 +4,12 @@ public class StackKnoten { //Eigentlich genau wie der normale Knoten, hat nur ke
 
     private Object[] content; //Inhalt, auf den der Knoten verweist
     private StackKnoten next;    //Der darauffolgende Knoten  
-    
-    
+
     //Konstruktor
-    public StackKnoten(Object[] x){ 
+    public StackKnoten(Object[] x) {
         content = x; //Inhalt = x
     }
 
-    
     public Object[] getContent() { //Inhalt zurückgeben
         return content;
     }
@@ -28,8 +26,4 @@ public class StackKnoten { //Eigentlich genau wie der normale Knoten, hat nur ke
         this.next = n;
     }
 
-    
-     
-    
 }
-

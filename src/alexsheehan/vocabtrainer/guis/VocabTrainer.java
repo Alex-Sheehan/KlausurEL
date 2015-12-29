@@ -1,6 +1,5 @@
 package alexsheehan.vocabtrainer.guis;
 
-import alexsheehan.vocabtrainer.datast.Knoten;
 import alexsheehan.vocabtrainer.Manager;
 import alexsheehan.vocabtrainer.Training;
 import alexsheehan.vocabtrainer.VocabularyTrainerProgram;
@@ -12,8 +11,6 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
 
 public class VocabTrainer extends javax.swing.JFrame {
 
@@ -22,7 +19,7 @@ public class VocabTrainer extends javax.swing.JFrame {
     protected Training training; //Training Instanz
 
     public VocabTrainer(Manager m) { //Konstruktor
-        manager = m; 
+        manager = m;
         initComponents(); //GUI wird erstellt
         this.setLocationRelativeTo(null);
         changeGUILanguage(false); //GUI-Sprache erstmal auf Deutsch
@@ -308,7 +305,7 @@ public class VocabTrainer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddvocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddvocActionPerformed
-        
+
         if (activeTraining) { //Wenn gerade ein training läuft muss das Training beendet werden bevor die AddGUI geöffnet wird
             if (tgbtnGuiLang.isSelected()) { //Wenn Fremdsprache aktiviert
                 if (btnAddvoc.getText().equalsIgnoreCase(manager.getEndTraining())) {//Benutzer bestätitigt
@@ -422,14 +419,14 @@ public class VocabTrainer extends javax.swing.JFrame {
         //Wert des Buttons, der die gezeigte Sprache des Trainings ändert
         if (tgbLang.isSelected()) {  //Fremdsprache gezeigt
 
-             //Togglebutton-Text geändert
+            //Togglebutton-Text geändert
             if (tgbtnGuiLang.isSelected()) {
                 tgbLang.setText(manager.getShown());
             } else {
                 tgbLang.setText("Gezeigt: " + manager.getGermanLanguageName());
             }
         } else { //Deutsches Wort gezeigt
-            
+
             //Togglebutton-Text geändert
             if (tgbtnGuiLang.isSelected()) {
                 tgbLang.setText(manager.getGerShown());
@@ -491,7 +488,7 @@ public class VocabTrainer extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRemvocActionPerformed
 
-    public void changeGUILanguage(boolean f) { //f = foreign: yes= english/french.. no=german
+    public void changeGUILanguage(boolean f) { //true= english/french.. false=german
 
         if (f) { //Fremdsprache aktiviert
             //Texte von allen TF, Labels & Buttons geändert
@@ -688,18 +685,18 @@ public class VocabTrainer extends javax.swing.JFrame {
     }
 
     /*
-    Output Nachrichten für Trainings:
-    4 Möglichkeiten:
+     Output Nachrichten für Trainings:
+     4 Möglichkeiten:
      > 0: neues Training begonnen
      > 1: Richtiges Wort
      > 2: Falsches Wort
      > 3: Training beenden
-    */
+     */
     public void setOutputText(int opt) {
         switch (opt) {
             case 0:
                 lbOutput.setForeground(Color.MAGENTA); //Farben
-                
+
                 //Passenden String (ggf. aus Manager) ausgeben
                 if (tgbtnGuiLang.isSelected()) {
                     lbOutput.setText(manager.getTrainingStarted());
@@ -740,13 +737,12 @@ public class VocabTrainer extends javax.swing.JFrame {
         }
     }
 
-    public int getOutputOption() { 
+    public int getOutputOption() {
         String y = lbOutput.getText();
 
         /*
-        Sucht durch den Text des Labels die passende Nummer der Ausgabe raus
-        */
-        
+         Sucht durch den Text des Labels die passende Nummer der Ausgabe raus
+         */
         if (y.equalsIgnoreCase(manager.getTrainingStarted()) || y.equalsIgnoreCase("Neues Training begonnen")) {
             return 0;
         }
@@ -759,7 +755,7 @@ public class VocabTrainer extends javax.swing.JFrame {
             return 2;
         }
 
-        if (y.equalsIgnoreCase(manager.getFinished()) || y.equalsIgnoreCase("Training beendet!")) { 
+        if (y.equalsIgnoreCase(manager.getFinished()) || y.equalsIgnoreCase("Training beendet!")) {
             return 3;
         }
         return -1; //Fehler

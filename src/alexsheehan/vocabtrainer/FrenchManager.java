@@ -2,18 +2,16 @@ package alexsheehan.vocabtrainer;
 
 public class FrenchManager extends Manager {
 
-     /*
-    @AlexSheehan Klausurersatzleistung
-    => Die Klasse FrenchManager
-    - Unterklasse von Manager, enthält Dateiname zur Speicherung von französischen Vokabeln
-    - Enthält alle Strings für französische GUI (durch Klick auf Button im franz. Vokabeltrainer einstellbar)
-    - FrenchManager bei Erstellung der VocabTrainer.java in WelcomeScreen.java initialisiert
-    */
-    
+    /*
+     @AlexSheehan Klausurersatzleistung
+     => Die Klasse FrenchManager
+     - Unterklasse von Manager, enthält Dateiname zur Speicherung von französischen Vokabeln
+     - Enthält alle Strings für französische GUI (durch Klick auf Button im franz. Vokabeltrainer einstellbar)
+     - FrenchManager bei Erstellung der VocabTrainer.java in WelcomeScreen.java initialisiert
+     */
     public FrenchManager() {
         super(); //Konstruktor von Manager übernehmen
         this.fileName = "lang_french_list.txt"; //Dateiname der Textdatei zur Speicherung des Vokabeln
-        
 
         //Sonstiges
         this.languageName = "Francais"; //Name der Sprache in der Sprache (English / Francais)
@@ -25,7 +23,7 @@ public class FrenchManager extends Manager {
         this.tfLabelInGerman = "Französisches"; //Überschrift für franz. Textfeld auf Deutsch (VocabTrainer)
         this.tfLabel = "Mot francais:"; //Überschrift für franz. TF auf Franz. (VocabTrainer)
         this.tfLabelGer = "Mot allemand:"; //Überschrift für deutsches TF auf Franz. (Vocabtrainer)
- 
+
         //Buttons
         this.sortButtonText = "Trier"; //Button zum Aufrufen des SortGUI (VocabTrainer)
         this.removeButtonText = "Enlever"; //Button zum Aufrufen des RemoveGUI (VocabTrainer)
@@ -46,7 +44,7 @@ public class FrenchManager extends Manager {
         this.chsaved = "Changements enregister";  //Meldung: Änderungen gespeichert (Sort GUI)
         this.savech = "Enregister changements"; //Änderungen speichern (Sort GUI)
         this.revertch = "Revenir changement";  //Änderungen rückgängig machen Button (Sort GUI)
-        
+
         //Remove GUI
         this.remGUICaption = "Enlever les mots"; //Überschrift des RemoveGUIS
         this.deletebtn = "Enlever";  //Löschen Button (RemoveGUIS)
@@ -62,7 +60,7 @@ public class FrenchManager extends Manager {
         this.trainingstarted = "Nouveau entraînement commencé"; //Neues Training gestartet (VocabTrainer)
         this.correctword = "Le mot est correct!";//Richtiges Wort eingegeben (VocabTrainer)
         this.wrongword = "Le mot n'est pas correct!";//Falsches Wort eingegeben (VocabTrainer)
-        this.finished = "Tu as fini t'entraînement! Résultat:";//Training beendet (VocabTrainer)
+        this.finished = "Tu as fini t'entraînement!";//Training beendet (VocabTrainer)
 
         VocabularyTrainerProgram.FILE_LIST_MANAGER.transcriptFileToList(this); //Beim Aufrufen Dateien aus Textdatei laden 
 

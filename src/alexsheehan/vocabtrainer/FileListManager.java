@@ -137,12 +137,11 @@ public class FileListManager {
         return "NPE, no Filecontent"; //Wenn Stringerstellung nicht erfolgreich war, FehlerString zurückgeben
     }
 
-    
     /*
-    => Seperate: Teilt den String der Datei in eine Liste aus String[] ein
-    - Ein String[] besteht aus deutschem Wort,Fremdsprachenwort und Schwierigkeit
-    - List = java.util.List => NICHT die Datenstruktur lineare Liste (alexsheehan.vobabtrainer.datast.Liste)
-    */
+     => Seperate: Teilt den String der Datei in eine Liste aus String[] ein
+     - Ein String[] besteht aus deutschem Wort,Fremdsprachenwort und Schwierigkeit
+     - List = java.util.List => NICHT die Datenstruktur lineare Liste (alexsheehan.vobabtrainer.datast.Liste)
+     */
     public List<String[]> seperate(String x) {
         if (!x.equals("NPE, no Filecontent")) { //Wenn FehlerCode nicht auftritt
             List<String[]> slist = new ArrayList<>(); //Neue java.util.List/ArrayList

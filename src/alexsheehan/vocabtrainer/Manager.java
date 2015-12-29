@@ -16,6 +16,12 @@ public abstract class Manager {
      - Setter Methode für Liste
      */
     //Vokabel Liste 
+    /*
+     Die lineare Liste wurde für die Speicherung der Vokabeln und für das
+     Training verwendet, da man, im Gegensatz zu Schlange & Stack, durch den
+     current Zeiger auf alle Objekte in der Liste zugreifen kann, und da das hinzufügen
+     aufgrund der Dynamik der Datenstruktur leicht ist
+     */
     protected Liste vkList; //Liste mit Vokabeln
     protected String fileName; //Dateiname der Textdatei zur Speicherung des Vokabeln
 

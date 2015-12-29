@@ -5,7 +5,6 @@ import alexsheehan.vocabtrainer.Manager;
 import alexsheehan.vocabtrainer.Miscellaneous;
 import alexsheehan.vocabtrainer.VocabularyTrainerProgram;
 import alexsheehan.vocabtrainer.Vokabel;
-import alexsheehan.vocabtrainer.datast.Knoten;
 import alexsheehan.vocabtrainer.datast.Stack;
 import alexsheehan.vocabtrainer.datast.StackKnoten;
 import java.awt.Color;
@@ -15,12 +14,12 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /*
-    @AlexSheehan Klausurersatzleistung
-    => Die Klasse SortGUI
-    - GUI zum sortieren von Vokabeln
-    - Stellt Liste in Tabelle da
-    - Comboboxen & Buttons zum Sortieren, Rückgängigmachen & speichern
-    */
+ @AlexSheehan Klausurersatzleistung
+ => Die Klasse SortGUI
+ - GUI zum sortieren von Vokabeln
+ - Stellt Liste in Tabelle da
+ - Comboboxen & Buttons zum Sortieren, Rückgängigmachen & speichern
+ */
 public class SortGUI extends javax.swing.JFrame {
 
     private VocabTrainer trainer;//Der Vokabel Trainer
@@ -28,6 +27,11 @@ public class SortGUI extends javax.swing.JFrame {
     private Object[] array; //Object[] zum entfernen & in Liste anzeigen
     private Stack changes; //Stack um Änderungen rückgängig machen zu können
 
+    /*
+     Der Stack wurde für das Rückgängigmachen in der Lösch-/Sortierklasse benutzt,
+     da neue Elemente immer nur oben eingefügt und entfernt werden und der Stack
+     gut für dies geeignet ist
+     */
     public SortGUI(VocabTrainer x, boolean tg) {//Konstruktor- VocabTrainer & Sprach-Boolean als Übergabeparameter
         this.tg = tg;
         trainer = x;
@@ -208,11 +212,10 @@ public class SortGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSwapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSwapActionPerformed
-        
+
         /*
-        Die Positionen zweier Vokabeln werden getauscht
-        */
-        
+         Die Positionen zweier Vokabeln werden getauscht
+         */
         //Positionen von Comboboxen abgelesen
         int x = Integer.parseInt(combo1.getSelectedItem().toString());
         int y = Integer.parseInt(combo2.getSelectedItem().toString());
@@ -223,8 +226,6 @@ public class SortGUI extends javax.swing.JFrame {
         } else {
             //Neue Reversible Änderung
             changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array))); //Array muss geklont werden, damit das im Stack nicht immer mitverändert wird....
-
-            
 
             Object zw = array[x - 1]; //Zwischenspeicher
 
@@ -239,7 +240,7 @@ public class SortGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSwapActionPerformed
 
     private void onClose(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_onClose
-        
+
     }//GEN-LAST:event_onClose
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -250,9 +251,8 @@ public class SortGUI extends javax.swing.JFrame {
     private void btnSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSortActionPerformed
 
         /*
-        Sortier Button geklickt, Combobox wird ausgelesen um Sortierart zu bestimmen
-        */
-        
+         Sortier Button geklickt, Combobox wird ausgelesen um Sortierart zu bestimmen
+         */
         //Zufälliges Anordnen
         if (cbOptions.getSelectedItem().toString().equalsIgnoreCase("Zufällig")) {
             changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array))); //Reversible Änderung
@@ -275,29 +275,29 @@ public class SortGUI extends javax.swing.JFrame {
             outputList(array);//Liste ausgeben
             return;
         }
-        
-        if(cbOptions.getSelectedItem().toString().equalsIgnoreCase("ABC (Deutsch)")){
+
+        if (cbOptions.getSelectedItem().toString().equalsIgnoreCase("ABC (Deutsch)")) {
             changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
             Miscellaneous.insertionSortGerAlph(array, false);//Sortier Methode aus Misc.
             outputList(array);//Liste ausgeben
             return;
         }
-        
-        if(cbOptions.getSelectedItem().toString().equalsIgnoreCase("CBA (Deutsch)")){
+
+        if (cbOptions.getSelectedItem().toString().equalsIgnoreCase("CBA (Deutsch)")) {
             changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
             Miscellaneous.insertionSortGerAlph(array, true);//Sortier Methode aus Misc.
             outputList(array);//Liste ausgeben
             return;
         }
-        
-         if(cbOptions.getSelectedItem().toString().equalsIgnoreCase("ABC (Fremdsprache)")){
+
+        if (cbOptions.getSelectedItem().toString().equalsIgnoreCase("ABC (Fremdsprache)")) {
             changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
             Miscellaneous.insertionSortForAlph(array, false);//Sortier Methode aus Misc.
             outputList(array);//Liste ausgeben
             return;
         }
-        
-        if(cbOptions.getSelectedItem().toString().equalsIgnoreCase("CBA (Fremdsprache)")){
+
+        if (cbOptions.getSelectedItem().toString().equalsIgnoreCase("CBA (Fremdsprache)")) {
             changes.push(new StackKnoten(Miscellaneous.cloneObjectArray(array)));//Reversible Änderung
             Miscellaneous.insertionSortForAlph(array, true);//Sortier Methode aus Misc.
             outputList(array);//Liste ausgeben
@@ -307,9 +307,9 @@ public class SortGUI extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         /*
-        Änderungen speichern
-        */
-        
+         Änderungen speichern
+         */
+
         trainer.getManager().setList(Liste.fromArray(array)); //Liste des Managers neu setzen
         changes.flush(); //Stack der Reversiblen Änderungen leeren
         try {
@@ -317,55 +317,50 @@ public class SortGUI extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(RemoveGUI.class.getName()).log(Level.SEVERE, null, ex); //Fehlermeldung
         }
-        if(tg){
+        if (tg) {
             lbMsg.setForeground(Color.green);
             lbMsg.setText(trainer.getManager().getChsaved()); //Änderungen gespeichert Nachricht
-        }else{
+        } else {
             lbMsg.setForeground(Color.green);
             lbMsg.setText("Änderungen gespeichert");//Änderungen gespeichert Nachricht
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnRevertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRevertActionPerformed
-       /*
-        Änderungen rückgängig machen
-        */
+        /*
+         Änderungen rückgängig machen
+         */
         if (changes.getSize() == 0) { //Keine Änderungen verfügbar
-            
-            if(tg){
+
+            if (tg) {
                 lbMsg.setForeground(Color.red);
                 lbMsg.setText(trainer.getManager().getNochangesrevertable()); //Meldung ausgeben
-            }else{
+            } else {
                 lbMsg.setForeground(Color.red);
                 lbMsg.setText("Keine umkehrbaren Änderungen!"); //Meldung ausgeben
             }
         } else {
 
             /*
-            Änderungen rückgängig machen
-            */
-            
+             Änderungen rückgängig machen
+             */
             Object[] r = (Object[]) changes.getHead().getContent();  //Head des Stacks holen
 
-            
-
             this.array = r; //Array auf die alte Version zurücksetzen
-
-            
 
             outputList(array); //Tabelle aktualisieren
             changes.pop(); //Head des Stacks entfernen
 
-            if(tg){ //GUI in Fremdsprache
+            if (tg) { //GUI in Fremdsprache
                 lbMsg.setForeground(Color.GREEN);
-                        
+
                 lbMsg.setText(trainer.getManager().getReverted());//Meldung ausgeben
-            }else{ //GUI auf Deutsch
+            } else { //GUI auf Deutsch
                 lbMsg.setForeground(Color.GREEN);
-                        
+
                 lbMsg.setText("Änderung rückgängig gemacht"); //Meldung ausgeben
             }
-            
+
         }
     }//GEN-LAST:event_btnRevertActionPerformed
 
@@ -408,9 +403,9 @@ public class SortGUI extends javax.swing.JFrame {
     public void setLanguage(boolean f) {
         if (f) { //Fremdsprache
             Manager mng = trainer.getManager();
-             /*
-            Unterschiedliche Texte aus Manager holen und als Text der Komponenten setzen
-            */
+            /*
+             Unterschiedliche Texte aus Manager holen und als Text der Komponenten setzen
+             */
             lbCaption.setText(mng.getSortGUICaption());
             btnSwap.setText(mng.getSwapText());
             btnSort.setText(mng.getSortString());
@@ -418,8 +413,8 @@ public class SortGUI extends javax.swing.JFrame {
             btnRevert.setText(mng.getRevertch());
         } else { //Deutsch
              /*
-            Text der unterschiedlichen Komponenten setzen
-            */
+             Text der unterschiedlichen Komponenten setzen
+             */
             lbCaption.setText("Vokabeln sortieren");
             btnSwap.setText("Positionen tauschen");
             btnSort.setText("Sortieren");
